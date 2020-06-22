@@ -1,58 +1,91 @@
-﻿import React, { Component } from 'react';
+﻿import React, {useState} from 'react';
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+
 import constant from "../../constant";
 import PageHeader from "../../components/pageHeader/PageHeader";
-import MarketItem from "./MarketItem";
+import MarketItemDetailsControl from "./MarketItemDetailsControl";
+import getMarketplaceColumns, {defaultSorted} from "./MarketplaceColumns";
+
 
 const itemList = [
     { 
         id: 1,
+        image: '',
         name: "Thor's Hammer - Mjölnir",
         description: "Buy and give some hammering",
         price: 18.5,
     },
     {
         id: 2,
+        image: '',
         name: "Loki's The Green Mask",
         description: "Be Da Great Green Prophet",
         price: 18.5,
     },
     {
         id: 3,
+        image: '',
         name: "Freya's sword",
         description: "Slash with ice and love",
         price: 18.5,
     }
 ]
 
+export interface IMarketItem {
+    seller: string;
+    name: string,
+    image: string,
+    description: string,
+    price: number,
+}
 
-class Marketplace extends Component<{}, { isOpen: boolean }> {
-    constructor(props: Readonly<{}>) {
-        super(props);
-        this.state = {
-            isOpen: false
-        }
+interface IMarketplaceProps {
+    isItemDetailsOpen: boolean;
+    selectedItem: IMarketItem;
+}
+
+const Marketplace = () => {
+    const [isItemDetailsOpen, setIsItemDetailsOpen] = useState<boolean>(false);
+    const [selectedItem, setSelectedItem] = useState<IMarketItem | undefined>(undefined);
+
+    const onViewDetails = (item: IMarketItem) => {
+        setSelectedItem(item);
+        setIsItemDetailsOpen(true);
+    }
+        
+    const onDetailsClose = () => {
+        setIsItemDetailsOpen(false);
+        setSelectedItem(undefined);
     }
     
-
-    public render() {
-        return (
-            <div>
-                <PageHeader title={constant.MARKETPLACE.HEADER_TITLE}
-                            subtitle={constant.MARKETPLACE.HEADER_SUBTITLE} 
-                />
-                {
-                    // @ts-ignore
-                    itemList.map(item => <MarketItem name={item.name} description={item.description} price={item.price} />)
-                }
-            </div>
-        );
-    }
-
-    private toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
+    const columns = getMarketplaceColumns(onViewDetails);
+   
+    return (
+        <div>
+            <MarketItemDetailsControl selectedItem={selectedItem} 
+                                           isOpen={isItemDetailsOpen} 
+                                           onClose={onDetailsClose}/>
+            
+            <PageHeader title={constant.MARKETPLACE.HEADER_TITLE}
+                        subtitle={constant.MARKETPLACE.HEADER_SUBTITLE} 
+            />
+            
+            <BootstrapTable
+                className="MarketplaceTable"
+                bootstrap4
+                keyField="id"
+                data={itemList}
+                // @ts-ignore
+                columns={columns}
+                defaultSorted={defaultSorted}
+                bordered={ false }
+                hover
+                striped
+            />
+        </div>
+    );
 }
+    
 
 export default Marketplace;
