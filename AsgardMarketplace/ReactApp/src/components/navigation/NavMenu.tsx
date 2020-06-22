@@ -7,7 +7,7 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
     public state = {
         isOpen: false
     };
-
+    
     public render() {
         return (
             <header>
@@ -21,7 +21,7 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
                                     <NavLink tag={Link} className="text-dark" to="/">Marketplace</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/order-list">Order List</NavLink>
+                                    <NavLink tag={Link} className="text-dark" to="/orders">Order List</NavLink>
                                 </NavItem>
                             </ul>
                         </Collapse>

@@ -6,8 +6,8 @@ interface IPageHeaderProps {
 }
 
 const PageHeader = ({ title, subtitle } : IPageHeaderProps) => (
-    <div>
-        <h1>{title}</h1>
+    <div style={{ margin: '50px 0'}} >
+        <h1 style={{ margin: '20px 0'}}>{title}</h1>
         <h3>{subtitle}</h3>
     </div>
 );
