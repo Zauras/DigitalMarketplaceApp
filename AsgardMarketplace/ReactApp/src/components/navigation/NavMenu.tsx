@@ -23,6 +23,9 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
                                 <NavItem>
                                     <NavLink tag={Link} className="text-dark" to="/orders">Order List</NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/fetch-data/:startDateIndex?">FETCH</NavLink>
+                                </NavItem>
                             </ul>
                         </Collapse>
                     </Container>
@@ -37,3 +40,4 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
         });
     }
 }
+

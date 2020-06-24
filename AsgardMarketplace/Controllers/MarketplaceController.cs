@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,14 +10,17 @@ namespace AsgardMarketplace.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class MarketplaceController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+
+        private readonly ILogger<MarketplaceController> _logger;
+
+        public MarketplaceController(ILogger<MarketplaceController> logger)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-        
-        private static readonly MarketplaceItemDto[] fakeItemList =
+            _logger = logger;
+        }
+
+        private static readonly MarketplaceItemDto[] fakeItemList = new[]
         {
             new MarketplaceItemDto
             {
@@ -45,26 +47,11 @@ namespace AsgardMarketplace.Controllers
                 Price = 18.5f
             }
         };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
+        
         [HttpGet]
         public IEnumerable<MarketplaceItemDto> Get()
         {
-            var rng = new Random();
-            var x = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-                {
-                    Date = DateTime.Now.AddDays(index),
-                    TemperatureC = rng.Next(-20, 55),
-                    Summary = Summaries[rng.Next(Summaries.Length)]
-                })
-                .ToArray();
-            
+
             return fakeItemList;
 
             // return 
