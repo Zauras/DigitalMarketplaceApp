@@ -1,6 +1,6 @@
 const urlConfig = {
     // Local 
-    "localhost:5000": "http://localhost:5001/",
+    "localhost:5001": "api/v1/",
 };
 
 export default urlConfig;

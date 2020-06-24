@@ -1,8 +1,8 @@
-namespace AsgardMarketplace.Controllers.Dto
+namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels
 {
-    public class MarketplaceItemDto
+    public class MarketplaceItemEntity
     {
-        public int Id { get; set; }
+        public int Id { get; set;  }
 
         public string Image { get; set; }
 

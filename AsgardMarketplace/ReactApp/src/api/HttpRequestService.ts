@@ -1,7 +1,7 @@
 import urlConfig from "./urlConfig";
 
 // @ts-ignore
-export const rootApiRoute = `${urlConfig[window.location.host]}`; //document.getElementsByTagName('base')[0].getAttribute('href') as string;
+ //document.getElementsByTagName('base')[0].getAttribute('href') as string;
 
 const commonHeaders = {
   Authorization: '',//`Bearer ${window.sessionStorage.getItem("outer-aut")}`,
@@ -44,9 +44,11 @@ class RequestData implements IRequestData {
   }
 }
 
+// @ts-ignore
+const rootApiRoute = `${urlConfig[window.location.host]}`;
+
 class Request {
   private url: string;
-  
   constructor(
     method: HttpRequestMethod,
     requestDto: RequestDto,
@@ -54,7 +56,6 @@ class Request {
   ) {
     const { requestUrl, body } = requestDto;
     this.url = `${rootApiRoute}${requestUrl}`
-    //this.url = `${requestUrl}`
     // @ts-ignore
     this["requestData"] =  new RequestData(method, headers, body) 
   }
