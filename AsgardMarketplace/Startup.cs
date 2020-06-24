@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase;
+using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade;
+using AsgardMarketplace.Services;
+using AsgardMarketplace.Services.Facade;
 
 namespace AsgardMarketplace
 {
@@ -16,7 +19,7 @@ namespace AsgardMarketplace
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -24,7 +27,15 @@ namespace AsgardMarketplace
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ReactApp/build"; });
+            services.AddSpaStaticFiles(configuration =>
+                { configuration.RootPath = "ReactApp/build"; });
+            
+            // Configure Dependency Injection
+            services.AddSingleton<IMarketplaceService, MarketplaceService>();
+            
+            string asgardMarketplaceConnectionString = Configuration.GetConnectionString("AsgardMarketplaceDatabase");
+            var asgardMarketplaceUnitOfWork = new UnitOfWork(asgardMarketplaceConnectionString);
+            services.AddSingleton<IUnitOfWork>(x => asgardMarketplaceUnitOfWork);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +62,8 @@ namespace AsgardMarketplace
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action=Index}/{id?}"
+                    );
             });
 
             app.UseSpa(spa =>

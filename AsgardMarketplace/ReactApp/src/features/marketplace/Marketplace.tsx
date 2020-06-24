@@ -52,7 +52,8 @@ const Marketplace = () => {
     
     const fetchItemList = async () => {
         const response = await MarketplaceService.getMarketplaceData();
-        !!response ? setItemList(response.itemList) : setItemList([])
+        console.log(response);
+        Boolean(response) ? setItemList(response?.itemList) : setItemList([])
     }
 
     const onViewDetails = (item: IMarketItem) => {
@@ -81,7 +82,7 @@ const Marketplace = () => {
                 className="MarketplaceTable"
                 bootstrap4
                 keyField="id"
-                data={fakeItemList}
+                data={itemList}
                 // @ts-ignore
                 columns={columns}
                 defaultSorted={defaultSorted}

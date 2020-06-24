@@ -8,7 +8,8 @@ class MarketplaceRequest {
 }
   
 export class ClientListResponse {
-  constructor({ itemList }) {
+  constructor(itemList) {
+    
     this._itemList = !!itemList ? itemList.map(client => trimStringsInObject(client)) : [];
   }
   
@@ -37,10 +38,10 @@ class MarketplaceService extends HttpRequestService {
   // GET clientList page
   getMarketplaceData = async () => {
     try {
-      const result = await this.get(new MarketplaceRequest());
-      return new ClientListResponse({...result.data});
+      const itemList = await this.get(new MarketplaceRequest());
+      return new ClientListResponse(itemList);
 
-    } catch (error) { new ClientListResponse({error}) }
+    } catch (error) { new ClientListResponse({}) }
   }
 
   // Activate / Deactivate Client
