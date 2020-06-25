@@ -12,9 +12,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
     {
         public MarketplaceItemRepository(SqlConnection connection) : base(connection) {}
 
-        public MarketplaceItemEntity[] GetAll()
-        {
-            return MarketplaceItemTable.Entities;
+        public MarketplaceItemEntity[] GetAll() => MarketplaceItemTable.Entities;
         }
     }
 }
