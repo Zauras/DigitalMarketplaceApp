@@ -24,6 +24,10 @@ const orderList = [
             description: "Item description",
             price: 18.5,
         },
+        seller: {
+            id: 1,
+            name: "user-1"
+        },
         status: OrderStatus.Unpaid,
         orderTime: new Date()
     },
@@ -35,6 +39,10 @@ const orderList = [
             name: "Item name",
             description: "Item description",
             price: 18.5,
+        },
+        seller: {
+            id: 1,
+            name: "user-1"
         },
         status: OrderStatus.PendingDelivery,
         orderTime: new Date()
@@ -48,6 +56,10 @@ const orderList = [
             description: "Item description",
             price: 18.5,
         },
+        seller: {
+            id: 1,
+            name: "user-1"
+        },
         status: OrderStatus.PendingDelivery,
         orderTime: new Date()
     },
@@ -59,6 +71,10 @@ const orderList = [
             name: "Item name",
             description: "Item description",
             price: 18.5,
+        },
+        seller: {
+            id: 1,
+            name: "user-1"
         },
         status: OrderStatus.Delivered,
         orderTime: new Date()
