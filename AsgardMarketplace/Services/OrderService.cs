@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-
 using AsgardMarketplace.Services.DomainModels;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade;
 using AsgardMarketplace.Services.Facade;
@@ -8,7 +6,7 @@ using AsgardMarketplace.Services.Facade;
 
 namespace AsgardMarketplace.Services
 {
-    public class OrderService : IMarketplaceService
+    public class OrderService : IOrderService
     {
         private readonly IUnitOfWork _asgardMarketplaceUnitOfWork;
         
@@ -16,15 +14,13 @@ namespace AsgardMarketplace.Services
         {
             _asgardMarketplaceUnitOfWork = asgardMarketplaceUnitOfWork;
         }
+
+        public IEnumerable<OrderModel> GetUserSellingOrders(int userId) =>
+            _asgardMarketplaceUnitOfWork.GetUserSellingOrders(userId);
         
+        public IEnumerable<OrderModel> GetUserBuyingOrders(int userId) =>
+            _asgardMarketplaceUnitOfWork.GetUserBuyingOrders(userId);
         
-        public IEnumerable<MarketplaceItemModel> GetMarketplaceItems()
-        {
-            var marketplaceItemsEntities = 
-                _asgardMarketplaceUnitOfWork.OrderRepository.GetUserOreder(userId);
-            
-            return marketplaceItemsEntities.Select(MarketplaceItemModel.ToModel);
-        }
     }
 }
 

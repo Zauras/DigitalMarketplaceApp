@@ -1,13 +1,11 @@
 using System.Collections.Generic;
-
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
 
 namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
 {
-    public interface IMarketplaceItemRepository
+    public interface IUserRepository
     {
-        public MarketplaceItemEntity[] GetAll();
+        public IEnumerable<UserEntity> GetAllInIds(IEnumerable<int> userIds);
         
-        public IEnumerable<MarketplaceItemEntity> GetAllInIds(IEnumerable<int> itemIds);
     }
 }

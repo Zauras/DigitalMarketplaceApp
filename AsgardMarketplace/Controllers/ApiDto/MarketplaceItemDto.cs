@@ -1,4 +1,4 @@
-namespace AsgardMarketplace.Controllers.Dto
+namespace AsgardMarketplace.Controllers.ApiDto
 {
     public class MarketplaceItemDto
     {
