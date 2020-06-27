@@ -10,6 +10,8 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels
 
         public string Description { get; set; }
         
+        public int OwnerId { get; set; }
+        
         public float Price { get; set; }
     }
 }

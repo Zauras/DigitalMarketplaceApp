@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using AsgardMarketplace.Controllers.Dto;
+using AsgardMarketplace.Controllers.ApiDto;
 
 namespace AsgardMarketplace.Controllers
 {

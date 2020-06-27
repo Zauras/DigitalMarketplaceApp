@@ -23,7 +23,7 @@ namespace AsgardMarketplace.Services
             var marketplaceItemsEntities = 
                 _asgardMarketplaceUnitOfWork.MarketplaceItemRepository.GetAll();
             
-            return marketplaceItemsEntities.Select(MarketplaceItemModel.ToModel);
+            return marketplaceItemsEntities.Select(MarketplaceItemModel.ToDomainModel);
         }
     }
 }

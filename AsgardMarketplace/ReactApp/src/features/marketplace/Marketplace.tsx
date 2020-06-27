@@ -6,7 +6,7 @@ import constant from "../../constant";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import MarketItemDetailsControl from "./MarketItemDetailsControl";
 import getMarketplaceColumns, {defaultSorted} from "./MarketplaceColumns";
-import MarketplaceService from "../../api/MarketplaceService";
+import MarketplaceService from "../../api/services/MarketplaceService";
 
 const fakeItemList = [
     { 
@@ -52,8 +52,7 @@ const Marketplace = () => {
     
     const fetchItemList = async () => {
         const response = await MarketplaceService.getMarketplaceData();
-        console.log(response);
-        Boolean(response) ? setItemList(response?.itemList) : setItemList([])
+        !!response ? setItemList(response?.itemList) : setItemList([])
     }
 
     const onViewDetails = (item: IMarketItem) => {

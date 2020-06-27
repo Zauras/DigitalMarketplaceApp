@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using AsgardMarketplace.Controllers.Dto;
+using AsgardMarketplace.Controllers.ApiDto;
 using AsgardMarketplace.Services.DomainModels;
 using AsgardMarketplace.Services.Facade;
 
@@ -27,7 +27,7 @@ namespace AsgardMarketplace.Controllers
 
         [HttpGet("items")]
         public ActionResult<IEnumerable<MarketplaceItemDto>> GetItems() => 
-            _marketplaceService.GetMarketplaceItems().Select(MarketplaceItemModel.ToDto).ToArray();
+            _marketplaceService.GetMarketplaceItems().Select(i => i.ToApiDto()).ToArray();
         
     }
 }

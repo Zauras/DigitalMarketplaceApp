@@ -1,22 +1,20 @@
-﻿
-import getApiRoute from "./apiRoutes";
-import { trimStringsInObject } from "../utilities/DataProcessFunctions";
-import HttpRequestService from "./HttpRequestService";
+﻿import getApiRoute from "../apiRoutes";
+import { trimStringsInObject } from "../../utilities/DataProcessFunctions";
+import HttpRequestService from "../HttpRequestService";
+import { IMarketItem } from "../../features/marketplace/Marketplace";
+
 
 class MarketplaceRequest {
   requestUrl = getApiRoute.MARKETPLACE.GET_ALL();
 }
   
-export class ClientListResponse {
-  constructor(itemList) {
+export class MarketplaceResponse {
+  itemList: IMarketItem[];
+  
+  constructor(itemList?: IMarketItem[]) {
     
-    this._itemList = !!itemList ? itemList.map(client => trimStringsInObject(client)) : [];
+    this.itemList = !!itemList ? itemList?.map(client => trimStringsInObject(client)) : [];
   }
-  
-  get itemList() {
-    return this._itemList;
-  }
-  
 }
 
 // class ChangeClientStatusRequest {
@@ -39,9 +37,9 @@ class MarketplaceService extends HttpRequestService {
   getMarketplaceData = async () => {
     try {
       const itemList = await this.get(new MarketplaceRequest());
-      return new ClientListResponse(itemList);
+      return new MarketplaceResponse(itemList);
 
-    } catch (error) { new ClientListResponse({}) }
+    } catch (error) { new MarketplaceResponse() }
   }
 
   // Activate / Deactivate Client

@@ -27,7 +27,7 @@ const getApiRoute = {
     GET_ALL: () => getRequestUrl(`marketplace/items`),
   },
   ORDERS: {
-    GET_ALL: () => getRequestUrl(`/orders`),
+    GET_USERS_ORDERS: (clientId) => getRequestUrl(`/orders`, clientId),
     PATCH_STATUS: (id) => getRequestUrl(`/order`, id)
   }
 }

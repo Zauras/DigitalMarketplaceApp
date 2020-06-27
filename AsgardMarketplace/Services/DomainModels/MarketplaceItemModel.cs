@@ -1,21 +1,21 @@
-using AsgardMarketplace.Controllers.Dto;
+using AsgardMarketplace.Controllers.ApiDto;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
 
 namespace AsgardMarketplace.Services.DomainModels
 {
     public class MarketplaceItemModel
     {
-        public static MarketplaceItemDto ToDto(MarketplaceItemModel model) =>
+        public MarketplaceItemDto ToApiDto() =>
             new MarketplaceItemDto
             {
-                Id = model.Id,
-                Image = model.Image,
-                Name = model.Name,
-                Description = model.Description,
-                Price = model.Price
+                Id = this.Id,
+                Image = this.Image,
+                Name = this.Name,
+                Description = this.Description,
+                Price = this.Price
             };
 
-        public static MarketplaceItemModel ToModel(MarketplaceItemDto dto) =>
+        public static MarketplaceItemModel ToDomainModel(MarketplaceItemDto dto) =>
             new MarketplaceItemModel(dto.Id, dto.Image, dto.Name, dto.Description, dto.Price);
 
         public static MarketplaceItemEntity ToEntity(MarketplaceItemModel model) =>
@@ -28,8 +28,8 @@ namespace AsgardMarketplace.Services.DomainModels
                 Price = model.Price
             };
         
-        public static MarketplaceItemModel ToModel(MarketplaceItemEntity model) =>
-            new MarketplaceItemModel(model.Id, model.Image, model.Name, model.Description, model.Price);
+        public static MarketplaceItemModel ToDomainModel(MarketplaceItemEntity entity) =>
+            new MarketplaceItemModel(entity.Id, entity.Image, entity.Name, entity.Description, entity.Price);
 
         public MarketplaceItemModel(int id, string image, string name, string description, float price)
         {

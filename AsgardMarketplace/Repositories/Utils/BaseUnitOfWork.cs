@@ -7,11 +7,9 @@ namespace AsgardMarketplace.Repositories.Utils
     {
         protected readonly SqlConnection Connection;
 
-        public BaseUnitOfWork(string connectionString)
-        {
-           Connection = new SqlConnection(connectionString);
-        }
-
+        public BaseUnitOfWork(string connectionString) =>
+            Connection = new SqlConnection(connectionString);
+        
         public void Dispose()
         {
             // Dispose of unmanaged resources.

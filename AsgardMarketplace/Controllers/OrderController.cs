@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using AsgardMarketplace.Controllers.Dto;
+using AsgardMarketplace.Controllers.ApiDto;
 using AsgardMarketplace.Services.DomainModels;
 using AsgardMarketplace.Services.Facade;
 
@@ -16,18 +16,22 @@ namespace AsgardMarketplace.Controllers
 
         private readonly ILogger<OrderController> _logger;
 
-        private readonly IMarketplaceService _orderService;
+        private readonly IOrderService _orderService;
 
-        public OrderController(ILogger<OrderController> logger, IMarketplaceService orderService)
+        public OrderController(ILogger<OrderController> logger, IOrderService orderService)
         {
             _logger = logger;
             _orderService = orderService;
         }
         
+        [HttpGet("selling/{userId}")]
+        public ActionResult<IEnumerable<OrderDto>> GetUserSellingOrders(int userId) =>
+            _orderService.GetUserSellingOrders(userId).Select(OrderModel.ToApiDto).ToArray();
 
-        [HttpGet("{userId}")]
-        public ActionResult<IEnumerable<Order>> GetItems(int userId) => 
-            _orderService.GetUserOrders(userId).Select(MarketplaceItemModel.ToDto).ToArray();
-        
+
+        [HttpGet("buying/{userId}")]
+        public ActionResult<IEnumerable<OrderDto>> GetUserBuyingOrders(int userId) =>
+            _orderService.GetUserBuyingOrders(userId).Select(OrderModel.ToApiDto).ToArray();
+
     }
 }

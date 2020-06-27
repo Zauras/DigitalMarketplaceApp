@@ -15,11 +15,14 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
         public OrderRepository(SqlConnection connection) : base(connection) {}
 
         
-        public IEnumerable<OrderEntity> GetSellerOrders(int sellerId) =>
-            OrderTable.Entities.Where(order => order.SellerId == sellerId);
+        public IEnumerable<OrderEntity> GetSellingOrders(int userId) =>
+            OrderTable.Entities.Where(order => order.SellerId == userId);
         
-        public IEnumerable<OrderEntity> GetBuyerOrders(int buyerId) =>
-            OrderTable.Entities.Where(order => order.BuyerId == buyerId);
+        public IEnumerable<OrderEntity> GetBuyingOrders(int userId) =>
+            OrderTable.Entities.Where(order => order.BuyerId == userId);
+
+        public IEnumerable<OrderEntity> GetAllByUserId(int userId) =>
+            OrderTable.Entities.Where(order => order.BuyerId == userId || order.SellerId == userId);
 
     }
 }
