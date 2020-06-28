@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import { Button, Col, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 import { IMarketItem } from "./Marketplace";
-
-const handleOrder = () => {}
+import OrderService from "../../api/services/OrderService";
 
 interface IItemDetailsControl {
     isOpen: boolean,
@@ -10,13 +9,49 @@ interface IItemDetailsControl {
     onClose: () => void
 }
 
+enum ActionControlContent {
+    ItemDetailsContent,
+    OrderDetailsContent,
+    Closed
+}
+
 const MarketItemDetailsControl = (props: IItemDetailsControl) => {
-    const {isOpen, selectedItem, onClose} = props;
+    const [actionControlContent, setActionControlContent] = 
+        useState<ActionControlContent>(ActionControlContent.Closed);
     
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const {isOpen, selectedItem, onClose} = props;
+
+    useEffect(() => {
+        if (isOpen && actionControlContent === ActionControlContent.Closed) {
+            setActionControlContent(ActionControlContent.ItemDetailsContent);
+        } 
+    });
+    
+    const closeActionControl = () => {
+        onClose();
+        setActionControlContent(ActionControlContent.Closed);
+    }
+    
+    const requestCreateOrder = async () => {
+        setIsLoading(true);
+        await OrderService.postOrderCreate();
+        setActionControlContent(ActionControlContent.OrderDetailsContent);
+        setIsLoading(false);
+    }
+
+    const requestSendPayment = async () => {
+        setIsLoading(true);
+        await OrderService.patchOrderSendPayment();
+        closeActionControl();
+        setIsLoading(false);
+    }
+         
     return (
         <div>
             <Modal centered size="lg" isOpen={isOpen}>
-                {selectedItem && 
+                {actionControlContent === ActionControlContent.ItemDetailsContent && selectedItem &&
                     <Fragment>
                         <ModalHeader>{selectedItem.name}</ModalHeader>
                         <ModalBody>
@@ -35,10 +70,24 @@ const MarketItemDetailsControl = (props: IItemDetailsControl) => {
                             </Container>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={handleOrder}>Order Item</Button>
-                            <Button color="secondary" onClick={onClose}>Close</Button>
+                            <Button color="primary" onClick={requestCreateOrder}>Order Item</Button>
+                            <Button color="secondary" onClick={closeActionControl}>Close</Button>
                         </ModalFooter>
                     </Fragment>
+                }
+
+                {actionControlContent === ActionControlContent.OrderDetailsContent &&
+                <Fragment>
+                  <ModalHeader>Order Created</ModalHeader>
+                  <ModalBody>
+                    Do you want to pay now?
+                    Otherwise you will have 2 hours to make a payment until order will be canceled.
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" onClick={requestSendPayment}>Pay</Button>
+                    <Button color="secondary" onClick={closeActionControl}>Latter</Button>
+                  </ModalFooter>
+                </Fragment>
                 }
             </Modal>
         </div>

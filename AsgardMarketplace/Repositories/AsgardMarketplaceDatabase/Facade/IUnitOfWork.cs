@@ -1,5 +1,6 @@
-
+using System;
 using System.Collections.Generic;
+
 using AsgardMarketplace.Repositories.Utils;
 using AsgardMarketplace.Services.DomainModels;
 
@@ -16,6 +17,8 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade
         public IEnumerable<OrderModel> GetUserBuyingOrders(int userId);
 
         public IEnumerable<MarketplaceItemModel> GetItemsOnMarket();
+
+        public OrderBookingModel CreateOrder(int itemId, int buyerId);
 
     }
 }

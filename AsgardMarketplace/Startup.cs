@@ -33,8 +33,11 @@ namespace AsgardMarketplace
             // Configure Dependency Injection
             services.AddSingleton<IMarketplaceService, MarketplaceService>();
             services.AddSingleton<IOrderService, OrderService>();
+            services.AddSingleton<IOrderBookingTimeoutWatcherService, OrderBookingTimeoutWatcherService>();
             
-            string asgardMarketplaceConnectionString = Configuration.GetConnectionString("AsgardMarketplaceDatabase");
+            string asgardMarketplaceConnectionString = Configuration
+                .GetConnectionString("AsgardMarketplaceDatabase");
+            
             var asgardMarketplaceUnitOfWork = new UnitOfWork(asgardMarketplaceConnectionString);
             services.AddSingleton<IUnitOfWork>(x => asgardMarketplaceUnitOfWork);
         }

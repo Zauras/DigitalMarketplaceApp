@@ -12,7 +12,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels
         
         public int ItemId { get; set; }
         
-        public int StatusId { get; set; }
+        public StatusType StatusId { get; set; }
         
         public DateTime OrderTime { get; set; }
 

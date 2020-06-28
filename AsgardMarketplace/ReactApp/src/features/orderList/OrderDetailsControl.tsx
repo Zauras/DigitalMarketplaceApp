@@ -11,9 +11,17 @@ interface IOrderDetailsControl {
     onClose: () => void
 }
 
-const OrderDetailsControl = (props: IOrderDetailsControl) => {
+const initialState = {
+    isConfirmationOpen: false,
+    isResponseOpen: false,
+};
+
+
+const OrderDetailsControl = () => {
     const { isOpen, selectedOrder, onClose } = props;
     let orderedItem = selectedOrder ? selectedOrder.orderedItem : undefined;
+    
+    
     
     console.log(selectedOrder);
     console.log(orderedItem);
@@ -56,20 +64,6 @@ const OrderDetailsControl = (props: IOrderDetailsControl) => {
                             <Button color="secondary" onClick={onClose}>Close</Button>
                         </ModalFooter>
                     </Fragment>
-                }
-                
-                {selectedOrder && orderedItem &&
-                <Fragment>
-                  <ModalHeader>Order Created</ModalHeader>
-                  <ModalBody>
-                    Do you want to pay now?
-                      Otherwise you will have 2 hours to make a payment until order will be canceled.
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="primary" onClick={handleOrder}>Order Item</Button>
-                    <Button color="secondary" onClick={onClose}>Close</Button>
-                  </ModalFooter>
-                </Fragment>
                 }
             </Modal>
         </div>

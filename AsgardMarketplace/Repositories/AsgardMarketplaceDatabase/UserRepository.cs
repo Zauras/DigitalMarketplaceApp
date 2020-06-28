@@ -4,6 +4,7 @@ using System.Linq;
 
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
+using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade;
 using AsgardMarketplace.Repositories.Utils;
 
 namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.RepoDto

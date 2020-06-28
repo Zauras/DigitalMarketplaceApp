@@ -29,7 +29,8 @@ const getApiRoute = {
   ORDERS: {
     GET_BUYING_USER_ORDERS: (clientId) => getRequestUrl(`/order/buying`, clientId),
     GET_SELLING_USER_ORDERS: (clientId) => getRequestUrl(`/order/selling`, clientId),
-    PATCH_STATUS: (id) => getRequestUrl(`/order`, id)
+    POST_ORDER_CREATE: () => getRequestUrl(`/order`),
+    PATCH_ORDER_SEND_PAYMENT: () => getRequestUrl(`/order/payment`)
   }
 }
 
