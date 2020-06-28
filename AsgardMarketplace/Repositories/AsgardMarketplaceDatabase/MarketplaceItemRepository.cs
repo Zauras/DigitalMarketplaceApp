@@ -18,6 +18,12 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
         public IEnumerable<MarketplaceItemEntity> GetAllInIds(IEnumerable<int> itemIds) =>
             MarketplaceItemTable.Entities
                 .Where(item => itemIds.Contains(item.Id));
+
+        public IEnumerable<MarketplaceItemEntity> GetItemsExcludedFromIds(
+            IEnumerable<int> excludedItemsIds) =>
+            MarketplaceItemTable.Entities.Where(item => !excludedItemsIds.Contains(item.Id));
+
     }
 }
 
+ 

@@ -23,6 +23,9 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
 
         public IEnumerable<OrderEntity> GetAllByUserId(int userId) =>
             OrderTable.Entities.Where(order => order.BuyerId == userId || order.SellerId == userId);
+        
+        public IEnumerable<int> GetOrderedItemsIds() =>
+            OrderTable.Entities.Select(order => order.ItemId);
 
     }
 }

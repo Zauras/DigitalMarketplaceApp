@@ -72,11 +72,11 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
                     
                 var itemModel = MarketplaceItemModel.ToDomainModel(
                     items.First(item => item.Id == order.ItemId));
+
+                var recipients = users.FirstOrDefault(user => user.Id == order.BuyerId);
+                var recipientsModel = recipients==null ? null : UserModel.ToDomainModel(recipients) ;
                 
-                var recipients = UserModel.ToDomainModel(
-                    users.FirstOrDefault(user => user.Id == order.BuyerId));
-                
-                return new OrderModel(order.Id, orderStatus, order.OrderTime, itemModel, recipients);
+                return new OrderModel(order.Id, orderStatus, order.OrderTime, itemModel, recipientsModel);
             });
 
             return orderModels;
@@ -89,9 +89,10 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
 
             return GetUserModelsByItems(orders, items, users);
         }
+        
 #endregion
         
-#region FacadeQueryMethods
+#region Facade Query Methods
         
         public IEnumerable<OrderModel> GetUserSellingOrders(int userId)
         {
@@ -103,6 +104,15 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
         {
             var buyingOrders = _orderRepository.Value.GetBuyingOrders(userId);
             return GetUserOrderModelsByOrderEntities(buyingOrders);
+        }
+        
+        public IEnumerable<MarketplaceItemModel> GetItemsOnMarket()
+        {
+            var orderedItemsIds = _orderRepository.Value.GetOrderedItemsIds();
+            var itemsInMarket = _marketplaceItemRepository.Value
+                .GetItemsExcludedFromIds(orderedItemsIds);
+
+            return itemsInMarket.Select(MarketplaceItemModel.ToDomainModel);
         }
         
 #endregion

@@ -8,26 +8,36 @@ export const defaultSorted: [{ dataField: any; order: SortOrder }] =
 const getOrderListColumns = (onViewDetails: ((arg0: any) => void) ) => [{
     dataField: 'id',
     text: 'ID'
-}, {
-    dataField: 'orderedItem.image',
+}, 
+    {
+    dataField: 'item.image',
     text: ''
 }, {
-    dataField: 'orderedItem.name',
+    dataField: 'item.name',
     text: 'Item Name',
     sort: true,
 }, {
-    dataField: 'orderedItem.price',
+    dataField: 'item.price',
     text: 'Price',
     sort: true,
-}, {
-    dataField: 'status',
+}, 
+    {
+    dataField: 'status.type',
     text: 'Status',
     sort: true,
-}, {
-    dataField: 'status',
-    text: 'Ordered On',
-    sort: true,
-}, {
+},
+    {
+        dataField: 'orderTime',
+        text: 'Ordered On',
+        sort: true,
+        formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) =>
+    {
+        console.log(cell)
+      return (<div>{cell.toLocaleString()}</div>)
+    }
+
+    },
+    {
     formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) => 
         (<Button color='primary'
                  onClick={() => onViewDetails(row)}
@@ -35,8 +45,8 @@ const getOrderListColumns = (onViewDetails: ((arg0: any) => void) ) => [{
         >
             View Dietails
         </Button>)
-    
-}];
+}
+];
 
 
 export default getOrderListColumns;

@@ -27,7 +27,8 @@ namespace AsgardMarketplace.Controllers
 
         [HttpGet("items")]
         public ActionResult<IEnumerable<MarketplaceItemDto>> GetItems() => 
-            _marketplaceService.GetMarketplaceItems().Select(i => i.ToApiDto()).ToArray();
+            _marketplaceService.GetMarketplaceItems().Select(i => i.ToApiDto())
+                .ToArray();
         
     }
 }

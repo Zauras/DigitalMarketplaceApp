@@ -52,7 +52,8 @@ const Marketplace = () => {
     
     const fetchItemList = async () => {
         const response = await MarketplaceService.getMarketplaceData();
-        !!response ? setItemList(response?.itemList) : setItemList([])
+        console.log(response);
+        !!response ? setItemList(response?.data) : setItemList([])
     }
 
     const onViewDetails = (item: IMarketItem) => {
@@ -70,8 +71,8 @@ const Marketplace = () => {
     return (
         <div>
             <MarketItemDetailsControl selectedItem={selectedItem} 
-                                           isOpen={isItemDetailsOpen} 
-                                           onClose={onDetailsClose}/>
+                                      isOpen={isItemDetailsOpen} 
+                                      onClose={onDetailsClose}/>
             
             <PageHeader title={constant.MARKETPLACE.HEADER_TITLE}
                         subtitle={constant.MARKETPLACE.HEADER_SUBTITLE} 

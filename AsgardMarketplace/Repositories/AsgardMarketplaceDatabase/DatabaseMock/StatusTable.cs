@@ -7,7 +7,6 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
     {
         public static readonly OrderStatusEntity[] Entities =
         {
-            new OrderStatusEntity(StatusType.InMarketplace),
             new OrderStatusEntity(StatusType.Booked),
             new OrderStatusEntity(StatusType.Paid),
             new OrderStatusEntity(StatusType.Shipped),

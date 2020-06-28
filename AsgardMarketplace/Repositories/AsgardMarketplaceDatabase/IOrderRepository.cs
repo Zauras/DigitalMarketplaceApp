@@ -8,6 +8,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
         public IEnumerable<OrderEntity> GetSellingOrders(int userId);
         public IEnumerable<OrderEntity> GetBuyingOrders(int userId);
         public IEnumerable<OrderEntity> GetAllByUserId(int userId);
+        public IEnumerable<int> GetOrderedItemsIds();
         
     }
 }

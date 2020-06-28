@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 
 using AsgardMarketplace.Controllers.ApiDto;
@@ -8,7 +9,7 @@ namespace AsgardMarketplace.Services.DomainModels
 {
     public class OrderModel : OrderModelBase
     {
-        public UserModel Recipient { get; set; }
+        public UserModel? Recipient { get; set; }
         public MarketplaceItemModel Item { get; set; }
         
         public OrderModel(
@@ -16,7 +17,7 @@ namespace AsgardMarketplace.Services.DomainModels
             OrderStatusModel status,
             DateTime orderTime,
             MarketplaceItemModel itemId,
-            UserModel recipient
+            UserModel? recipient
         ) : base(id, status, orderTime)
         {
             Recipient = recipient;
@@ -30,7 +31,7 @@ namespace AsgardMarketplace.Services.DomainModels
                 Status = model.Status.ToApiDto(),
                 OrderTime = model.OrderTime,
                 Item = model.Item.ToApiDto(),
-                Recipient = model.Recipient.ToApiDto()
+                Recipient = model.Recipient?.ToApiDto()
             };
         
         public OrderDto ToApiDto() =>
@@ -40,7 +41,7 @@ namespace AsgardMarketplace.Services.DomainModels
                 Status = Status.ToApiDto(),
                 OrderTime = OrderTime,
                 Item = Item.ToApiDto(),
-                Recipient = Recipient.ToApiDto()
+                Recipient = Recipient?.ToApiDto()
             };
         
         //

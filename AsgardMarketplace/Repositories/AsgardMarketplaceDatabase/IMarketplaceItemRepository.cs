@@ -9,5 +9,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
         public MarketplaceItemEntity[] GetAll();
         
         public IEnumerable<MarketplaceItemEntity> GetAllInIds(IEnumerable<int> itemIds);
+        
+        public IEnumerable<MarketplaceItemEntity> GetItemsExcludedFromIds(IEnumerable<int> excludedItemsIds);
     }
 }
