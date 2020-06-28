@@ -22,6 +22,7 @@ namespace AsgardMarketplace.Services
 
         public OrderBookingTimeoutWatcherService(IOrderService orderService)
         {
+            // TODO: return signal to avoid circular dependencies
             _orderService = orderService;
             StartBookingTimeoutsWatcher();
         }

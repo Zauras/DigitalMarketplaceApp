@@ -7,7 +7,7 @@ namespace AsgardMarketplace.Services.Facade
     {
         public IEnumerable<OrderModel> GetUserSellingOrders(int userId);
         public IEnumerable<OrderModel> GetUserBuyingOrders(int userId);
-        public bool CreateOrder(int itemId, int buyerId);
+        public int? CreateOrder(int itemId, int buyerId);
         public void CancelOrder(int orderId);
         public bool ReceivePayment(int orderId);
     }

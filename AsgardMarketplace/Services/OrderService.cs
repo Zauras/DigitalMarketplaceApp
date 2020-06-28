@@ -29,20 +29,20 @@ namespace AsgardMarketplace.Services
         public IEnumerable<OrderModel> GetUserBuyingOrders(int userId) =>
             _asgardMarketplaceUnitOfWork.GetUserBuyingOrders(userId);
         
-        public bool CreateOrder(int itemId, int buyerId)
+        public int? CreateOrder(int itemId, int buyerId)
         {
             try
             {
                 var orderBooking =  _asgardMarketplaceUnitOfWork.CreateOrder(itemId, buyerId);
                 _bookingTimeoutService.StartBookingTimeout(orderBooking);
+                return orderBooking.OrderId;
             }
             catch (Exception)
             {
                 // In real project would catch SQL, NullPointer or Threading Exceptions 
                 // retry or in case of data corruption - rollback
-                return false;
+                return null;
             }
-            return true;
         }
         
         // In real world would redirect user page to Third party payment services

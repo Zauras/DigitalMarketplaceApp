@@ -18,8 +18,8 @@ enum ActionControlContent {
 const MarketItemDetailsControl = (props: IItemDetailsControl) => {
     const [actionControlContent, setActionControlContent] = 
         useState<ActionControlContent>(ActionControlContent.Closed);
-    
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [createdOrderId, setCreatedOrderId] = useState<number | undefined>(undefined);
 
     const {isOpen, selectedItem, onClose} = props;
 
@@ -36,14 +36,15 @@ const MarketItemDetailsControl = (props: IItemDetailsControl) => {
     
     const requestCreateOrder = async () => {
         setIsLoading(true);
-        await OrderService.postOrderCreate();
+        const orderId = await OrderService.postOrderCreate(selectedItem?.id);
+        setCreatedOrderId(orderId);
         setActionControlContent(ActionControlContent.OrderDetailsContent);
         setIsLoading(false);
     }
 
     const requestSendPayment = async () => {
         setIsLoading(true);
-        await OrderService.patchOrderSendPayment();
+        await OrderService.patchOrderSendPayment(createdOrderId);
         closeActionControl();
         setIsLoading(false);
     }

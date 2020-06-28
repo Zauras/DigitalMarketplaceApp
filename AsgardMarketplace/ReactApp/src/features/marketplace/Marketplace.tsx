@@ -33,7 +33,8 @@ const fakeItemList = [
 ]
 
 export interface IMarketItem {
-    seller: string;
+    id: number
+    owner: string;
     name: string,
     image: string,
     description: string,
