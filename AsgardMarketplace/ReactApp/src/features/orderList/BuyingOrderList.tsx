@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
@@ -6,6 +6,7 @@ import PageHeader from "../../components/pageHeader/PageHeader";
 import OrderDetailsControl from "./OrderDetailsControl";
 import getOrderListColumns, { defaultSorted } from "./OrderListColumns";
 import { IMarketItem } from "../marketplace/Marketplace";
+import OrderService from "../../api/services/OrderService";
 
 enum OrderStatus {
     Unpaid = "Unpaid",
@@ -14,7 +15,7 @@ enum OrderStatus {
     Canceled="Canceled"
 }
 
-const orderList = [
+const orderListTest = [
     {
         id: 1,
         orderedItem: {
@@ -82,6 +83,42 @@ const orderList = [
 ]
 
 
+const orderListX = [
+    {
+        id: 1,
+        item: {
+            id: 20,
+            image: '',
+            name: "Item name",
+            description: "Item description",
+            price: 18.5,
+        },
+        seller: {
+            id: 1,
+            name: "user-1"
+        },
+        status: OrderStatus.Unpaid,
+        orderTime: new Date()
+    },
+    {
+        id: 1,
+        item: {
+            id: 20,
+            image: '',
+            name: "Item name",
+            description: "Item description",
+            price: 18.5,
+        },
+        seller: {
+            id: 1,
+            name: "user-1"
+        },
+        status: OrderStatus.Unpaid,
+        orderTime: new Date()
+    },
+]
+
+
 export interface IOrder {
     id: number,
     orderedItem: IMarketItem,
@@ -89,9 +126,23 @@ export interface IOrder {
     orderTime: Date
 }
 
-const OrderList = () => {
+const userId = 1;
+
+const BuyingOrderList = () => {
     const [isOrderDetailsOpen, setIsItemDetailsOpen] = useState<boolean>(false);
-    const [selectedOrder, setSelectedItem] = useState<IOrder | undefined>(undefined);
+    const [selectedOrder, setSelectedItem] = useState<any>(undefined);
+    const [orderList, setOrderList] = useState<any>([]);
+
+    useEffect( () => {
+        (async () => await fetchOrderList())();
+    }, []);
+
+    const fetchOrderList = async () => {
+        // TODO: selling and buying orders separate
+        const response = await OrderService.getBuyingOrders(userId);
+        console.log(response);
+        !!response ? setOrderList(response) : setOrderList([]);
+    }
 
     const onViewDetails = (order: IOrder) => {
         setSelectedItem(order);
@@ -111,8 +162,8 @@ const OrderList = () => {
                                  isOpen={isOrderDetailsOpen}
                                  onClose={onDetailsClose}/>
 
-            <PageHeader title={"Your orders list"}
-                        subtitle={"Review or change status"}
+            <PageHeader title={"Items you ordered"}
+                        subtitle={"Review your orders"}
             />
 
             <BootstrapTable
@@ -130,5 +181,5 @@ const OrderList = () => {
     );
 }
 
-OrderList.displayName = "OrderList";
-export default OrderList;
+BuyingOrderList.displayName = "BuyingOrderList";
+export default BuyingOrderList;

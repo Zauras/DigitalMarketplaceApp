@@ -1,31 +1,43 @@
 import getApiRoute from "../apiRoutes";
 import HttpRequestService from "../HttpRequestService";
 
-class UserOrdersRequest {
-    requestUrl: string;
-    
-    constructor(clientId: number) {
-        this.requestUrl = getApiRoute.ORDERS.GET_USERS_ORDERS(clientId);
-    }
-}
 
-export class UserOrdersResponse {
-    usersOrders: any
+// export class UserOrdersResponse {
+//     usersOrders: any
+//
+//     constructor(usersOrders?: any) {
+//         console.log(usersOrders)
+//         this.usersOrders = Boolean(usersOrders) ? 
+//             usersOrders.map((order: any) => ({ 
+//                     ...order,
+//                     orderTime: new Date(order.orderTime) 
+//                 })) 
+//             : usersOrders;
+//     }
+// }
 
-    constructor(usersOrders?: any) {
-        this.usersOrders = usersOrders;
-    }
-}
+
+const dateCastOrderTime = (usersOrders: any) => 
+    Boolean(usersOrders) ?
+        usersOrders.map((order: any) => ({
+            ...order,
+            orderTime: new Date(order.orderTime)
+        }))
+        : usersOrders;
 
 
 class OrderService extends HttpRequestService {
     
-    getClientOrders = async (clientId: number) => {
-        try {
-            const usersOrders = await this.get(new UserOrdersRequest(clientId));
-            return new UserOrdersResponse(usersOrders);
+    getBuyingOrders = async (clientId: number) => {
+        const route = getApiRoute.ORDERS.GET_BUYING_USER_ORDERS(clientId);
+        const response = await this.get(route);
+        return dateCastOrderTime(response.data);
+    }
 
-        } catch (error) { new UserOrdersResponse() }
+    getSellingOrders = async (clientId: number) => {
+        const route = getApiRoute.ORDERS.GET_SELLING_USER_ORDERS(clientId);
+        const response = await this.get(route);
+        return dateCastOrderTime(response.data);
     }
 
 }

@@ -12,7 +12,7 @@ namespace AsgardMarketplace.Services.DomainModels
         }
 
         public static UserModel ToDomainModel(UserEntity entity) =>
-            new UserModel(entity.Id, entity.Name);
+            entity == null ? new UserModel(entity.Id, entity.Name) : null;
 
 
         public UserDto ToApiDto() =>

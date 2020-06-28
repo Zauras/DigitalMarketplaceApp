@@ -3,13 +3,12 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels
     
     public enum StatusType
     {
-        InMarketplace = 1,
-        Booked = 2,
-        Paid = 3,
-        Shipped = 4,
-        Completed = 5,
-        Canceled = 6,
-        Unknown = 7
+        Booked = 1,
+        Paid = 2,
+        Shipped = 3,
+        Completed = 4,
+        Canceled = 5,
+        Unknown = 6
     }
 
 
@@ -28,7 +27,6 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels
         {
             switch (statusType)
             {
-                case StatusType.InMarketplace: return "In Marketplace";
                 case StatusType.Booked: return "Booked";
                 case StatusType.Paid: return "Paid";
                 case StatusType.Shipped: return "Shipped";

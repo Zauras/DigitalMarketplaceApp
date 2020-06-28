@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Button, Col, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 
-import { IOrder } from "./OrderList";
+import { IOrder } from "./BuyingOrderList";
 
 const handleOrder = () => {}
 
@@ -22,6 +22,7 @@ const OrderDetailsControl = (props: IOrderDetailsControl) => {
     return (
         <div>
             <Modal centered size="lg" isOpen={isOpen}>
+                
                 {selectedOrder && orderedItem &&
                     <Fragment>
                         <ModalHeader>{orderedItem.name}</ModalHeader>
@@ -55,6 +56,20 @@ const OrderDetailsControl = (props: IOrderDetailsControl) => {
                             <Button color="secondary" onClick={onClose}>Close</Button>
                         </ModalFooter>
                     </Fragment>
+                }
+                
+                {selectedOrder && orderedItem &&
+                <Fragment>
+                  <ModalHeader>Order Created</ModalHeader>
+                  <ModalBody>
+                    Do you want to pay now?
+                      Otherwise you will have 2 hours to make a payment until order will be canceled.
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" onClick={handleOrder}>Order Item</Button>
+                    <Button color="secondary" onClick={onClose}>Close</Button>
+                  </ModalFooter>
+                </Fragment>
                 }
             </Modal>
         </div>
