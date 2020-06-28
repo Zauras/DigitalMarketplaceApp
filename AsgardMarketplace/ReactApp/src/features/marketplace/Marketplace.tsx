@@ -52,7 +52,6 @@ const Marketplace = () => {
     
     const fetchItemList = async () => {
         const response = await MarketplaceService.getMarketplaceData();
-        console.log(response);
         !!response ? setItemList(response?.data) : setItemList([])
     }
 
@@ -70,7 +69,7 @@ const Marketplace = () => {
    
     return (
         <div>
-            <MarketItemDetailsControl selectedItem={selectedItem} 
+            <MarketItemDetailsControl selectedItem={selectedItem}
                                       isOpen={isItemDetailsOpen} 
                                       onClose={onDetailsClose}/>
             

@@ -13,10 +13,12 @@ namespace AsgardMarketplace.Controllers
     [Route("api/v1/[controller]")]
     public class OrderController : ControllerBase
     {
-
         private readonly ILogger<OrderController> _logger;
 
         private readonly IOrderService _orderService;
+        
+        // In real project it would be would be find out from request token
+        private const int UserId = 1;
 
         public OrderController(ILogger<OrderController> logger, IOrderService orderService)
         {
@@ -32,6 +34,14 @@ namespace AsgardMarketplace.Controllers
         [HttpGet("buying/{userId}")]
         public ActionResult<IEnumerable<OrderDto>> GetUserBuyingOrders(int userId) =>
             _orderService.GetUserBuyingOrders(userId).Select(OrderModel.ToApiDto).ToArray();
+
+        [HttpPost]
+        public ActionResult<bool> CreateOrder(int itemId) =>
+            _orderService.CreateOrder(itemId, UserId);
+
+        [HttpPatch("payment")]
+        public ActionResult<bool> ReceivePayment(int userId) =>
+            _orderService.ReceivePayment(userId);
 
     }
 }

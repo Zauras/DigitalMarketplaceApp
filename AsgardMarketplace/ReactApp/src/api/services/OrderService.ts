@@ -2,21 +2,6 @@ import getApiRoute from "../apiRoutes";
 import HttpRequestService from "../HttpRequestService";
 
 
-// export class UserOrdersResponse {
-//     usersOrders: any
-//
-//     constructor(usersOrders?: any) {
-//         console.log(usersOrders)
-//         this.usersOrders = Boolean(usersOrders) ? 
-//             usersOrders.map((order: any) => ({ 
-//                     ...order,
-//                     orderTime: new Date(order.orderTime) 
-//                 })) 
-//             : usersOrders;
-//     }
-// }
-
-
 const dateCastOrderTime = (usersOrders: any) => 
     Boolean(usersOrders) ?
         usersOrders.map((order: any) => ({
@@ -24,6 +9,7 @@ const dateCastOrderTime = (usersOrders: any) =>
             orderTime: new Date(order.orderTime)
         }))
         : usersOrders;
+
 
 
 class OrderService extends HttpRequestService {
@@ -40,6 +26,17 @@ class OrderService extends HttpRequestService {
         return dateCastOrderTime(response.data);
     }
 
+    postOrderCreate = async (itemId: number) => {
+        const route = getApiRoute.ORDERS.POST_ORDER_CREATE();
+        const response = await this.post(route, { itemId });
+        return response.data;
+    }
+
+    patchOrderSendPayment = async (orderId: number) => {
+        const route = getApiRoute.ORDERS.PATCH_ORDER_SEND_PAYMENT();
+        const response = await this.patch(route, { orderId });
+        return response.data;
+    }
 }
 
 export default new OrderService();

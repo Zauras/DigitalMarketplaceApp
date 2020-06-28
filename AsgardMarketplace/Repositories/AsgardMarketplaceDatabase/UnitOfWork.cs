@@ -1,6 +1,7 @@
 ﻿﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+ using System.Collections.Specialized;
+ using System.Linq;
 
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade;
@@ -44,9 +45,51 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
                 () => new UserRepository(Connection)
             );
         }
-
-#region InternalQueryMethods
+        
         // In work with real database would return Querables or Monades to send into SQL server for resolving as one query
+#region Facade Query Methods
+
+        public IEnumerable<OrderModel> GetUserSellingOrders(int userId)
+        {
+            var sellingOrders = _orderRepository.Value.GetSellingOrders(userId);
+            return GetUserOrderModelsByOrderEntities(sellingOrders);
+        }
+        
+        public IEnumerable<OrderModel> GetUserBuyingOrders(int userId)
+        {
+            var buyingOrders = _orderRepository.Value.GetBuyingOrders(userId);
+            return GetUserOrderModelsByOrderEntities(buyingOrders);
+        }
+        
+        public IEnumerable<MarketplaceItemModel> GetItemsOnMarket()
+        {
+            var orderedItemsIds = _orderRepository.Value.GetOrderedItemsIds();
+            var itemsInMarket = _marketplaceItemRepository.Value
+                .GetItemsExcludedFromIds(orderedItemsIds);
+
+            return itemsInMarket.Select(MarketplaceItemModel.ToDomainModel);
+        }
+
+        public OrderBookingModel CreateOrder(int itemId, int buyerId)
+        {
+            // check if item exist
+            var item = _marketplaceItemRepository.Value.GetItem(itemId);
+            if (item == null) throw new KeyNotFoundException();
+            // check if it is not in other orders
+            var itemOrder = _orderRepository.Value.GetOrderByItemId(item.Id);
+            if (itemOrder != null) throw new InvalidOperationException();
+            // create order
+            (int orderId, DateTime orderTime) = _orderRepository.Value
+                .CreateOrder(itemId, item.OwnerId, buyerId );
+             
+            return new OrderBookingModel(orderId, orderTime);
+        }
+
+
+        #endregion
+
+// In work with real database would return Querables or Monades to send into SQL server for resolving as one query
+#region Internal Query Methods
 
         private IEnumerable<MarketplaceItemEntity> GetItemsByOrders(IEnumerable<OrderEntity> orders)
         {
@@ -68,7 +111,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
             var orderModels = orders.Select(order =>
             {
                 var orderStatus = OrderStatusModel.ToDomainModel(
-                    _orderStatusRepository.Value.GetStatusById(order.StatusId));
+                    _orderStatusRepository.Value.GetStatusById((int) order.StatusId));
                     
                 var itemModel = MarketplaceItemModel.ToDomainModel(
                     items.First(item => item.Id == order.ItemId));
@@ -88,31 +131,6 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
             var users = GetUsersByItems(items);
 
             return GetUserModelsByItems(orders, items, users);
-        }
-        
-#endregion
-        
-#region Facade Query Methods
-        
-        public IEnumerable<OrderModel> GetUserSellingOrders(int userId)
-        {
-            var sellingOrders = _orderRepository.Value.GetSellingOrders(userId);
-            return GetUserOrderModelsByOrderEntities(sellingOrders);
-        }
-        
-        public IEnumerable<OrderModel> GetUserBuyingOrders(int userId)
-        {
-            var buyingOrders = _orderRepository.Value.GetBuyingOrders(userId);
-            return GetUserOrderModelsByOrderEntities(buyingOrders);
-        }
-        
-        public IEnumerable<MarketplaceItemModel> GetItemsOnMarket()
-        {
-            var orderedItemsIds = _orderRepository.Value.GetOrderedItemsIds();
-            var itemsInMarket = _marketplaceItemRepository.Value
-                .GetItemsExcludedFromIds(orderedItemsIds);
-
-            return itemsInMarket.Select(MarketplaceItemModel.ToDomainModel);
         }
         
 #endregion

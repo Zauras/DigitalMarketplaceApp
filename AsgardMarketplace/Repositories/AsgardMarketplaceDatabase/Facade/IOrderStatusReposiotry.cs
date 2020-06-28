@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
 
-namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
+namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade
 {
     public interface IOrderStatusRepository
     {

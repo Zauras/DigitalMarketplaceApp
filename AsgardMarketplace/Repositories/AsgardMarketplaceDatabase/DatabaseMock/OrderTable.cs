@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
 
 namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
 {
     static class OrderTable
     {
-        public static readonly OrderEntity[] Entities = 
+        public static List<OrderEntity> Entities = new List<OrderEntity>
         {
             new OrderEntity
             {
@@ -13,7 +14,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
                 BuyerId = 2,
                 SellerId = 1,
                 ItemId = 1,
-                StatusId = 2,
+                StatusId = StatusType.Shipped,
                 OrderTime = new DateTime(2020, 6, 20, 19, 10, 9)
             },
             new OrderEntity
@@ -22,7 +23,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
                 BuyerId = 3,
                 SellerId = 1,
                 ItemId = 2,
-                StatusId = 3,
+                StatusId = StatusType.Canceled,
                 OrderTime = new DateTime(2020, 6, 26, 8, 4, 9)
             },
             new OrderEntity
@@ -31,7 +32,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
                 BuyerId = 2,
                 SellerId = 1,
                 ItemId = 3,
-                StatusId = 2,
+                StatusId = StatusType.Completed,
                 OrderTime = new DateTime(2020, 6, 28, 12, 6, 9)
             },
             new OrderEntity
@@ -40,7 +41,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
                 BuyerId = 5,
                 SellerId = 1,
                 ItemId = 4,
-                StatusId = 2,
+                StatusId = StatusType.Canceled,
                 OrderTime = new DateTime(2020, 6, 20, 19, 10, 9)
             },
             new OrderEntity
@@ -49,7 +50,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
                 BuyerId = 3,
                 SellerId = 1,
                 ItemId = 5,
-                StatusId = 3,
+                StatusId = StatusType.Completed,
                 OrderTime = new DateTime(2020, 6, 26, 8, 4, 9)
             },
             new OrderEntity
@@ -58,7 +59,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
                 BuyerId = 1,
                 SellerId = 2,
                 ItemId = 6,
-                StatusId = 2,
+                StatusId = StatusType.Completed,
                 OrderTime = new DateTime(2020, 6, 28, 12, 6, 9)
             },
             new OrderEntity
@@ -67,7 +68,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
                 BuyerId = 1,
                 SellerId = 2,
                 ItemId = 7,
-                StatusId = 2,
+                StatusId = StatusType.Completed,
                 OrderTime = new DateTime(2020, 6, 20, 19, 10, 9)
             },
             
