@@ -36,7 +36,7 @@ namespace AsgardMarketplace.Controllers
             _orderService.GetUserBuyingOrders(userId).Select(OrderModel.ToApiDto).ToArray();
 
         [HttpPost]
-        public ActionResult<bool> CreateOrder(int itemId) =>
+        public ActionResult<int?> CreateOrder(int itemId) =>
             _orderService.CreateOrder(itemId, UserId);
 
         [HttpPatch("payment")]

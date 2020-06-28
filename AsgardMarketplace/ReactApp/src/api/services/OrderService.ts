@@ -26,13 +26,13 @@ class OrderService extends HttpRequestService {
         return dateCastOrderTime(response.data);
     }
 
-    postOrderCreate = async (itemId: number) => {
+    postOrderCreate = async (itemId: number | undefined) => {
         const route = getApiRoute.ORDERS.POST_ORDER_CREATE();
         const response = await this.post(route, { itemId });
         return response.data;
     }
 
-    patchOrderSendPayment = async (orderId: number) => {
+    patchOrderSendPayment = async (orderId: number | undefined) => {
         const route = getApiRoute.ORDERS.PATCH_ORDER_SEND_PAYMENT();
         const response = await this.patch(route, { orderId });
         return response.data;
