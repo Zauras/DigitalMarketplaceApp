@@ -1,13 +1,13 @@
 ﻿import React from 'react';
 
 interface IPageHeaderProps {
-    title: string,
-    subtitle: string
+    title: string;
+    subtitle: string;
 }
 
-const PageHeader = ({ title, subtitle } : IPageHeaderProps) => (
-    <div style={{ margin: '50px 0'}} >
-        <h1 style={{ margin: '20px 0'}}>{title}</h1>
+const PageHeader = ({ title, subtitle }: IPageHeaderProps) => (
+    <div style={{ margin: '50px 0' }}>
+        <h1 style={{ margin: '20px 0' }}>{title}</h1>
         <h3>{subtitle}</h3>
     </div>
 );

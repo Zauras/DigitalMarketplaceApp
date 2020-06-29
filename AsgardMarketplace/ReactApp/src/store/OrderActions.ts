@@ -41,19 +41,30 @@ type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (
+        dispatch,
+        getState,
+    ) => {
         // Only load data if it's something we don't already have (and are not already loading)
         const appState = getState();
-        if (appState && appState.weatherForecasts && startDateIndex !== appState.weatherForecasts.startDateIndex) {
+        if (
+            appState &&
+            appState.weatherForecasts &&
+            startDateIndex !== appState.weatherForecasts.startDateIndex
+        ) {
             fetch(`weatherforecast`)
-                .then(response => response.json() as Promise<WeatherForecast[]>)
-                .then(data => {
-                    dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: data });
+                .then((response) => response.json() as Promise<WeatherForecast[]>)
+                .then((data) => {
+                    dispatch({
+                        type: 'RECEIVE_WEATHER_FORECASTS',
+                        startDateIndex: startDateIndex,
+                        forecasts: data,
+                    });
                 });
 
             dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
         }
-    }
+    },
 };
 
 // ----------------
@@ -61,12 +72,13 @@ export const actionCreators = {
 
 const unloadedState: any = {
     selectedItem: undefined,
-    isLoading: false 
+    isLoading: false,
 };
 
-export const reducer: Reducer<WeatherForecastsState> =
-    (state: any | undefined, incomingAction: Action): any => {
-    
+export const reducer: Reducer<WeatherForecastsState> = (
+    state: any | undefined,
+    incomingAction: Action,
+): any => {
     if (state === undefined) {
         return unloadedState;
     }
@@ -77,7 +89,7 @@ export const reducer: Reducer<WeatherForecastsState> =
             return {
                 startDateIndex: action.startDateIndex,
                 forecasts: state.forecasts,
-                isLoading: true
+                isLoading: true,
             };
         case 'RECEIVE_WEATHER_FORECASTS':
             // Only accept the incoming data if it matches the most recent request. This ensures we correctly
@@ -86,7 +98,7 @@ export const reducer: Reducer<WeatherForecastsState> =
                 return {
                     startDateIndex: action.startDateIndex,
                     forecasts: action.forecasts,
-                    isLoading: false
+                    isLoading: false,
                 };
             }
             break;

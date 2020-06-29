@@ -9,32 +9,36 @@ using AsgardMarketplace.Services.Facade;
 
 namespace AsgardMarketplace.Services
 {
-    public class OrderBookingTimeoutWatcherService : IOrderBookingTimeoutWatcherService
+    public sealed class OrderBookingTimeoutWatcherService : IOrderBookingTimeoutWatcherService
     {
+        private const int TickIntervalSeconds = 10;
+        
         private readonly TimeSpan _orderBookingTimeoutMs 
             = new TimeSpan(2, 0, 0);
 
-        private readonly IOrderService _orderService;
-        
         // Safe since using service as Singleton
         private ConcurrentDictionary<int, DateTime> _orderBookings =
             new ConcurrentDictionary<int, DateTime>();
 
-        public OrderBookingTimeoutWatcherService(IOrderService orderService)
+        public delegate void OrderBookingTimeoutHandler (object source, int orderId);
+        public event OrderBookingTimeoutHandler OrderBookingTimeout;
+
+        public OrderBookingTimeoutWatcherService()
         {
-            // TODO: return signal to avoid circular dependencies
-            _orderService = orderService;
             StartBookingTimeoutsWatcher();
         }
 
         public bool StartBookingTimeout(OrderBookingModel orderBooking) =>
             _orderBookings.TryAdd(orderBooking.OrderId, orderBooking.OrderTime);
+
+        private void OnOrderTimeout(int orderId) => 
+            OrderBookingTimeout?.Invoke(this, orderId);
         
         private void StartBookingTimeoutsWatcher()
         {
             IDisposable watcher = null;
             watcher = Observable
-                .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(10))
+                .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(TickIntervalSeconds))
                 .Take(1)
                 .Subscribe(_ =>
                 {
@@ -55,16 +59,18 @@ namespace AsgardMarketplace.Services
                 {
                     if (nowTime - booking.Value >= _orderBookingTimeoutMs)
                     {
-                        _orderService.CancelOrder(booking.Key);
-                    
+                        var orderId = booking.Key;
                         var orderTime = booking.Value;
-                        _orderBookings.TryRemove(booking.Key, out orderTime);
+                        OnOrderTimeout(orderId);
+                        _orderBookings.TryRemove(orderId, out orderTime);
                     }
                 });
                 Thread.Sleep(1000);
             }
             // ReSharper disable once FunctionNeverReturns
         }
+        
+        
         
     }
 }

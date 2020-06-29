@@ -4,10 +4,8 @@ import NavMenu from '../navigation/NavMenu';
 
 const Layout = (props: { children?: React.ReactNode }) => (
     <React.Fragment>
-        <NavMenu/>
-        <Container>
-            {props.children}
-        </Container>
+        <NavMenu />
+        <Container>{props.children}</Container>
     </React.Fragment>
 );
 

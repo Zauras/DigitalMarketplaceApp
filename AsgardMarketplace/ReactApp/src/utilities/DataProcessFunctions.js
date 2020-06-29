@@ -1,22 +1,18 @@
 ﻿// Trims objects' all string properties
 export const trimStringsInObject = (object) => {
-  let trimmedObject = {...object}
-  
-  Object.keys(object).forEach(propKey => {
-    const propValue = object[propKey];
-    if (typeof propValue === "string" || propValue instanceof String){
-      return object[propKey] = propValue.trim()
-    }
-  });
+    let trimmedObject = { ...object };
 
-  return trimmedObject;
-}
+    Object.keys(object).forEach((propKey) => {
+        const propValue = object[propKey];
+        if (typeof propValue === 'string' || propValue instanceof String) {
+            return (object[propKey] = propValue.trim());
+        }
+    });
 
-export const isPrimitiveType = (value) => 
-  Object(value) !== value;
+    return trimmedObject;
+};
 
-export const isNotEmptyObject = (object) => (
-    !!object
-    && object.constructor === Object 
-    && Object.keys(object).length !== 0
-  )
+export const isPrimitiveType = (value) => Object(value) !== value;
+
+export const isNotEmptyObject = (object) =>
+    !!object && object.constructor === Object && Object.keys(object).length !== 0;

@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
-import PageHeader from "../../components/pageHeader/PageHeader";
-import OrderDetailsControl from "./OrderDetailsControl";
-import getOrderListColumns, { defaultSorted } from "./OrderListColumns";
-import OrderService from "../../api/services/OrderService";
-import {IOrder} from "./BuyingOrderList";
-
-
+import PageHeader from '../../components/pageHeader/PageHeader';
+import OrderDetailsControl from './OrderDetailsControl';
+import getOrderListColumns, { defaultSorted } from './OrderListColumns';
+import OrderService from '../../api/services/OrderService';
+import { IOrder } from './BuyingOrderList';
 
 const userId = 1;
 
@@ -17,7 +15,7 @@ const SellingOrderList = () => {
     const [selectedOrder, setSelectedItem] = useState<any>(undefined);
     const [orderList, setOrderList] = useState<any>([]);
 
-    useEffect( () => {
+    useEffect(() => {
         (async () => await fetchOrderList())();
     }, []);
 
@@ -26,33 +24,31 @@ const SellingOrderList = () => {
         const response = await OrderService.getSellingOrders(userId);
         console.log(response);
         Boolean(response) ? setOrderList(response) : setOrderList([]);
-    }
+    };
 
     const onViewDetails = (order: IOrder) => {
         setSelectedItem(order);
         setIsItemDetailsOpen(true);
-    }
+    };
 
     const onDetailsClose = () => {
         setIsItemDetailsOpen(false);
         setSelectedItem(undefined);
-    }
+    };
 
     const columns = getOrderListColumns(onViewDetails);
 
     return (
         <div>
-            <OrderDetailsControl selectedOrder={selectedOrder}
-                                 isOpen={isOrderDetailsOpen}
-                                 onClose={onDetailsClose}/>
+            {/*<OrderDetailsControl selectedOrder={selectedOrder}*/}
+            {/*                     isOpen={isOrderDetailsOpen}*/}
+            {/*                     onClose={onDetailsClose}/>*/}
 
-            <PageHeader title={"Items you sell"}
-                        subtitle={"Review your items"}
-            />
+            <PageHeader title={'Items you sell'} subtitle={'Review your items'} />
 
             <BootstrapTable
                 bootstrap4
-                keyField="id"
+                keyField='id'
                 data={orderList}
                 // @ts-ignore
                 columns={columns}
@@ -63,7 +59,7 @@ const SellingOrderList = () => {
             />
         </div>
     );
-}
+};
 
-SellingOrderList.displayName = "SellingOrderList";
+SellingOrderList.displayName = 'SellingOrderList';
 export default SellingOrderList;
