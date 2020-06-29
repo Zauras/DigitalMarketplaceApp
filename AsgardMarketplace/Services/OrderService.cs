@@ -20,6 +20,7 @@ namespace AsgardMarketplace.Services
         {
             _asgardMarketplaceUnitOfWork = asgardMarketplaceUnitOfWork;
             _bookingTimeoutService = bookingTimeoutService;
+            _bookingTimeoutService.OrderBookingTimeout += OnOrderCanceled;
         }
         
 
@@ -50,13 +51,12 @@ namespace AsgardMarketplace.Services
             _asgardMarketplaceUnitOfWork
                 .OrderRepository.SetOrderStatusCanceled(orderId);
         
-
         public void CancelOrder(int orderId) => _asgardMarketplaceUnitOfWork
             .OrderRepository.SetOrderStatusCanceled(orderId);
         
-
-
         
+        private void OnOrderCanceled(object source, int orderId) => CancelOrder(orderId);
+
     }
 }
 

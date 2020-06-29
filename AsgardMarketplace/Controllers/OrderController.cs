@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -36,12 +37,17 @@ namespace AsgardMarketplace.Controllers
             _orderService.GetUserBuyingOrders(userId).Select(OrderModel.ToApiDto).ToArray();
 
         [HttpPost]
-        public ActionResult<int?> CreateOrder(int itemId) =>
+        public ActionResult<int?> CreateOrder([FromBody] int itemId) =>
             _orderService.CreateOrder(itemId, UserId);
-
+        
         [HttpPatch("payment")]
-        public ActionResult<bool> ReceivePayment(int userId) =>
+        public ActionResult<bool> ReceivePayment([FromBody] int userId) =>
             _orderService.ReceivePayment(userId);
 
+    }
+
+    public class ItemID
+    {
+        public int itemId { get; set; }
     }
 }

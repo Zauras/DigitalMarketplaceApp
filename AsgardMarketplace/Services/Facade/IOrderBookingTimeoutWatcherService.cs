@@ -6,5 +6,8 @@ namespace AsgardMarketplace.Services.Facade
     {
         public bool StartBookingTimeout(OrderBookingModel orderBooking);
 
+        public event OrderBookingTimeoutWatcherService.OrderBookingTimeoutHandler
+            OrderBookingTimeout;
+
     }
 }

@@ -9,14 +9,16 @@ it('renders without crashing', () => {
         default: () => {},
         subscribe: () => {},
         dispatch: () => {},
-        getState: () => ({ ...state })
+        getState: () => ({ ...state }),
     });
     const store = storeFake({}) as any;
 
     ReactDOM.render(
         <Provider store={store}>
             <MemoryRouter>
-                <App/>
+                <App />
             </MemoryRouter>
-        </Provider>, document.createElement('div'));
+        </Provider>,
+        document.createElement('div'),
+    );
 });
