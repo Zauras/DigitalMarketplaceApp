@@ -13,7 +13,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
     {
         public MarketplaceItemRepository(SqlConnection connection) : base(connection) {}
 
-        public MarketplaceItemEntity[] GetAll() => MarketplaceItemTable.Entities;
+        public MarketplaceItemEntity[] GetAll() => MarketplaceItemTable.Entities.ToArray();
 
         public IEnumerable<MarketplaceItemEntity> GetAllInIds(IEnumerable<int> itemIds) =>
             MarketplaceItemTable.Entities
@@ -25,7 +25,26 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
 
         public MarketplaceItemEntity GetItem(int itemId) =>
             MarketplaceItemTable.Entities.FirstOrDefault(item => item.Id == itemId);
+        
+        public bool ChangeItemOwner(int? itemId, int? newOwnerId)
+        {
+            if (itemId == null || newOwnerId == null) return false;
+            
+            var targetedItem = MarketplaceItemTable.Entities
+                .FirstOrDefault(item => item.Id == itemId);
+            
+            if (targetedItem == null) return false;
 
+            MarketplaceItemTable.Entities.ForEach(item =>
+            {
+                if (item.Id == itemId)
+                {
+                    item.OwnerId = (int) newOwnerId;
+                }
+            });
+            return true;
+        }
+        
     }
 }
 

@@ -9,7 +9,9 @@ namespace AsgardMarketplace.Controllers.ApiDto
         public string Name  { get; set; }
 
         public string Description { get; set; }
-        
+
+        public int OwnerId { get; set; }
+
         public float Price { get; set; }
     }
 }

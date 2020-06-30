@@ -18,12 +18,15 @@ const getRequestUrl = (apiRoute, param = null, queryParams = {}) =>
 const getApiRoute = {
     MARKETPLACE: {
         GET_ALL: () => getRequestUrl(`marketplace/items`),
+        GET_USER_ITEMS: (userId) => getRequestUrl(`marketplace/items/owner`, userId),
     },
     ORDERS: {
-        GET_BUYING_USER_ORDERS: (clientId) => getRequestUrl(`/order/buying`, clientId),
-        GET_SELLING_USER_ORDERS: (clientId) => getRequestUrl(`/order/selling`, clientId),
+        GET_BUYING_USER_ORDERS: (userId) => getRequestUrl(`/order/buying`, userId),
+        GET_SELLING_USER_ORDERS: (userId) => getRequestUrl(`/order/selling`, userId),
         POST_ORDER_CREATE: () => getRequestUrl(`/order`),
         PATCH_ORDER_SEND_PAYMENT: () => getRequestUrl(`/order/payment`),
+        PATCH_ORDER_SHIP: () => getRequestUrl(`/order/ship`),
+        PATCH_ORDER_RECEIVE: () => getRequestUrl(`/order/receive`),
     },
 };
 

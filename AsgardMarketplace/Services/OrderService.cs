@@ -49,8 +49,18 @@ namespace AsgardMarketplace.Services
         // In real world would redirect user page to Third party payment services
         public bool ReceivePayment(int orderId) =>
             _asgardMarketplaceUnitOfWork
-                .OrderRepository.SetOrderStatusCanceled(orderId);
+                .OrderRepository.SetOrderStatusPaid(orderId);
         
+        public bool ShipItem(int orderId) =>
+            _asgardMarketplaceUnitOfWork
+                .OrderRepository.SetOrderStatusShipped(orderId);
+        
+        public bool CompleteOrder(int orderId)
+        {
+            try {  return _asgardMarketplaceUnitOfWork.CompleteOrder(orderId); }
+            catch (Exception) { return false; }
+        }
+
         public void CancelOrder(int orderId) => _asgardMarketplaceUnitOfWork
             .OrderRepository.SetOrderStatusCanceled(orderId);
         

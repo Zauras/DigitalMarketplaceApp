@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,6 +18,9 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
         public OrderRepository(SqlConnection connection) : base(connection) {}
         
         
+        public OrderEntity? GetById(int id) =>
+            OrderTable.Entities.FirstOrDefault(order => order.Id == id);
+
         public IEnumerable<OrderEntity> GetSellingOrders(int userId) =>
             OrderTable.Entities.Where(order => order.SellerId == userId);
         
@@ -35,7 +39,7 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
         public (int, DateTime) CreateOrder(int itemId, int sellerId, int buyerId)
         {
             int id = OrderTable.Entities.Max(order => order.Id) + 1;
-            DateTime orderTime = new DateTime();
+            DateTime orderTime = DateTime.Now;
             
             OrderTable.Entities.Add(new OrderEntity
             {
@@ -51,6 +55,10 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
         }
 
         public bool SetOrderStatusPaid(int orderId) => SetOrderStatus(orderId, StatusType.Paid);
+        
+        public bool SetOrderStatusShipped(int orderId) => SetOrderStatus(orderId, StatusType.Shipped);
+        
+        public bool SetOrderStatusCompleted(int orderId) => SetOrderStatus(orderId, StatusType.Completed);
 
         public bool SetOrderStatusCanceled(int orderId) => SetOrderStatus(orderId, StatusType.Canceled);
 

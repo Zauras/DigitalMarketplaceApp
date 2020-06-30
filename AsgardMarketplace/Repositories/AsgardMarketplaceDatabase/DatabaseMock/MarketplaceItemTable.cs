@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
 
 namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
 {
     static class MarketplaceItemTable
     {
-        public static readonly MarketplaceItemEntity[] Entities = 
+        public static readonly List<MarketplaceItemEntity> Entities = new List<MarketplaceItemEntity>
         {
             new MarketplaceItemEntity
             {

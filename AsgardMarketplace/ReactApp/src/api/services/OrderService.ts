@@ -28,11 +28,24 @@ class OrderService extends HttpRequestService {
         return response.data;
     };
 
-    patchOrderSendPayment = async (orderId: number | undefined) => {
+    patchOrderSendPayment = async (orderId: number) => {
         const route = getApiRoute.ORDERS.PATCH_ORDER_SEND_PAYMENT();
         const response = await this.patch(route, orderId);
         return response.data;
     };
+
+    patchOrderShip = async (orderId: number) => {
+        const route = getApiRoute.ORDERS.PATCH_ORDER_SHIP();
+        const response = await this.patch(route, orderId);
+        return response.data;
+    };
+
+    patchOrderReceive = async (orderId: number) => {
+        const route = getApiRoute.ORDERS.PATCH_ORDER_RECEIVE();
+        const response = await this.patch(route, orderId);
+        return response.data;
+    };
+    
 }
 
 export default new OrderService();

@@ -52,9 +52,9 @@ namespace AsgardMarketplace.Services
 
         private void CheckBookingTimeouts() 
         {
-            while (true)
-            {
-                DateTime nowTime = new DateTime();
+         //   while (true)
+          //  {
+                DateTime nowTime = DateTime.Now;
                 _orderBookings.ToList().ForEach(booking =>
                 {
                     if (nowTime - booking.Value >= _orderBookingTimeoutMs)
@@ -65,8 +65,8 @@ namespace AsgardMarketplace.Services
                         _orderBookings.TryRemove(orderId, out orderTime);
                     }
                 });
-                Thread.Sleep(1000);
-            }
+        //        Thread.Sleep(1000);
+         //   }
             // ReSharper disable once FunctionNeverReturns
         }
         

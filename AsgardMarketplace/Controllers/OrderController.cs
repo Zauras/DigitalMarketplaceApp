@@ -43,6 +43,14 @@ namespace AsgardMarketplace.Controllers
         [HttpPatch("payment")]
         public ActionResult<bool> ReceivePayment([FromBody] int userId) =>
             _orderService.ReceivePayment(userId);
+        
+        [HttpPatch("ship")]
+        public ActionResult<bool> ShipItem([FromBody] int userId) =>
+            _orderService.ShipItem(userId);
+        
+        [HttpPatch("receive")]
+        public ActionResult<bool> CompleteOrder([FromBody] int userId) =>
+            _orderService.CompleteOrder(userId);
 
     }
 

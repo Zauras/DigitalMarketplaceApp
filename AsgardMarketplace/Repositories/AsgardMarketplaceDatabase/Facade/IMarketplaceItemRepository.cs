@@ -12,6 +12,8 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade
         public IEnumerable<MarketplaceItemEntity> GetItemsExcludedFromIds(IEnumerable<int> excludedItemsIds);
 
         public MarketplaceItemEntity GetItem(int itemId);
+        
+        public bool ChangeItemOwner(int? itemId, int? newOwnerId);
 
     }
 }

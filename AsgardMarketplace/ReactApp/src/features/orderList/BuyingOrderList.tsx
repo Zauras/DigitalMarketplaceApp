@@ -7,6 +7,7 @@ import OrderDetailsControl from './OrderDetailsControl';
 import getOrderListColumns, { defaultSorted } from './OrderListColumns';
 import { IMarketItem } from '../marketplace/Marketplace';
 import OrderService from '../../api/services/OrderService';
+import LoaderScreen from '../../components/loader/LoaderScreen';
 
 enum OrderStatus {
     Unpaid = 'Unpaid',
@@ -127,6 +128,7 @@ export interface IOrder {
 const userId = 1;
 
 const BuyingOrderList = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isOrderDetailsOpen, setIsItemDetailsOpen] = useState<boolean>(false);
     const [selectedOrder, setSelectedItem] = useState<any>(undefined);
     const [orderList, setOrderList] = useState<any>([]);
@@ -136,10 +138,10 @@ const BuyingOrderList = () => {
     }, []);
 
     const fetchOrderList = async () => {
-        // TODO: selling and buying orders separate
+        setIsLoading(true);
         const response = await OrderService.getBuyingOrders(userId);
-        console.log(response);
         !!response ? setOrderList(response) : setOrderList([]);
+        setIsLoading(false);
     };
 
     const onViewDetails = (order: IOrder) => {
@@ -147,18 +149,27 @@ const BuyingOrderList = () => {
         setIsItemDetailsOpen(true);
     };
 
+    const onReceiveItem = async (order: IOrder) => {
+        setIsLoading(true);
+        await OrderService.patchOrderReceive(order.id);
+        await fetchOrderList();
+    };
+
     const onDetailsClose = () => {
         setIsItemDetailsOpen(false);
         setSelectedItem(undefined);
     };
 
-    const columns = getOrderListColumns(onViewDetails);
+    const columns = getOrderListColumns(onViewDetails, onReceiveItem, false);
 
+    // TODO: receive the item
     return (
         <div>
             {/*<OrderDetailsControl selectedOrder={selectedOrder}*/}
             {/*                     isOpen={isOrderDetailsOpen}*/}
             {/*                     onClose={onDetailsClose}/>*/}
+
+            <LoaderScreen dim isLoading={isLoading} />
 
             <PageHeader title={'Items you ordered'} subtitle={'Review your orders'} />
 
