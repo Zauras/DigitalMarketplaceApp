@@ -10,5 +10,8 @@ namespace AsgardMarketplace.Services.Facade
         public int? CreateOrder(int itemId, int buyerId);
         public void CancelOrder(int orderId);
         public bool ReceivePayment(int orderId);
+        public bool ShipItem(int orderId);
+        public bool CompleteOrder(int orderId);
+        
     }
 }

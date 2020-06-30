@@ -18,7 +18,9 @@ namespace AsgardMarketplace.Services
         
         public IEnumerable<MarketplaceItemModel> GetMarketplaceItems() =>
             _asgardMarketplaceUnitOfWork.GetItemsOnMarket();
-        
+
+        public IEnumerable<MarketplaceItemModel> GetUserItemsOnMarket(int userId) =>
+            _asgardMarketplaceUnitOfWork.GetUserItemsOnMarket(userId);
     }
 }
 

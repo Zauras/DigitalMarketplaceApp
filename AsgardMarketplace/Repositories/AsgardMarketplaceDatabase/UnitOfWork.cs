@@ -1,9 +1,8 @@
 ﻿﻿using System;
 using System.Collections.Generic;
- using System.Collections.Specialized;
- using System.Linq;
+using System.Linq;
 
-using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
+ using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DataModels;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.RepoDto;
 using AsgardMarketplace.Repositories.Utils;
@@ -70,6 +69,12 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
             return itemsInMarket.Select(MarketplaceItemModel.ToDomainModel);
         }
 
+        public IEnumerable<MarketplaceItemModel> GetUserItemsOnMarket(int userId)
+        {
+            var itemsOnMarket = GetItemsOnMarket();
+            return itemsOnMarket.Where(item => item.OwnerId == userId);
+        }
+
         public OrderBookingModel CreateOrder(int itemId, int buyerId)
         {
             // check if item exist
@@ -85,6 +90,17 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase
             return new OrderBookingModel(orderId, orderTime);
         }
 
+        public bool CompleteOrder(int orderId)
+        {
+            // get order
+            var order = _orderRepository.Value.GetById(orderId);
+            if (order == null) throw new KeyNotFoundException();
+            // update item owner
+            var isItemOwnerChanged = _marketplaceItemRepository.Value.ChangeItemOwner(order?.ItemId, order?.BuyerId);
+            if (!isItemOwnerChanged) throw new InvalidOperationException();
+            // change order status
+            return _orderRepository.Value.SetOrderStatusCompleted(orderId);
+        }
 
         #endregion
 

@@ -7,6 +7,7 @@ import PageHeader from '../../components/pageHeader/PageHeader';
 import MarketItemDetailsControl from './MarketItemDetailsControl';
 import getMarketplaceColumns, { defaultSorted } from './MarketplaceColumns';
 import MarketplaceService from '../../api/services/MarketplaceService';
+import LoaderScreen from '../../components/loader/LoaderScreen';
 
 const fakeItemList = [
     {
@@ -42,6 +43,7 @@ export interface IMarketItem {
 }
 
 const Marketplace = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [itemList, setItemList] = useState<IMarketItem[]>([]);
     const [isItemDetailsOpen, setIsItemDetailsOpen] = useState<boolean>(false);
     const [selectedItem, setSelectedItem] = useState<IMarketItem | undefined>(undefined);
@@ -51,8 +53,10 @@ const Marketplace = () => {
     }, []);
 
     const fetchItemList = async () => {
+        setIsLoading(true);
         const response = await MarketplaceService.getMarketplaceData();
-        !!response ? setItemList(response?.data) : setItemList([]);
+        !!response ? setItemList(response) : setItemList([]);
+        setIsLoading(false);
     };
 
     const onViewDetails = (item: IMarketItem) => {
@@ -69,6 +73,8 @@ const Marketplace = () => {
 
     return (
         <div>
+            <LoaderScreen dim isLoading={isLoading} />
+
             <MarketItemDetailsControl
                 selectedItem={selectedItem}
                 fetchItems={fetchItemList}

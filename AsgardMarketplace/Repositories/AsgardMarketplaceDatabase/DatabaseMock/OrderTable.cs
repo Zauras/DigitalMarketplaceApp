@@ -26,33 +26,33 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.DatabaseMock
                 StatusId = StatusType.Canceled,
                 OrderTime = new DateTime(2020, 6, 26, 8, 4, 9)
             },
-            new OrderEntity
-            {
-                Id = 3,
-                BuyerId = 2,
-                SellerId = 1,
-                ItemId = 3,
-                StatusId = StatusType.Completed,
-                OrderTime = new DateTime(2020, 6, 28, 12, 6, 9)
-            },
-            new OrderEntity
-            {
-                Id = 4,
-                BuyerId = 5,
-                SellerId = 1,
-                ItemId = 4,
-                StatusId = StatusType.Canceled,
-                OrderTime = new DateTime(2020, 6, 20, 19, 10, 9)
-            },
-            new OrderEntity
-            {
-                Id = 5,
-                BuyerId = 3,
-                SellerId = 1,
-                ItemId = 5,
-                StatusId = StatusType.Completed,
-                OrderTime = new DateTime(2020, 6, 26, 8, 4, 9)
-            },
+            // new OrderEntity
+            // {
+            //     Id = 3,
+            //     BuyerId = 2,
+            //     SellerId = 1,
+            //     ItemId = 3,
+            //     StatusId = StatusType.Completed,
+            //     OrderTime = new DateTime(2020, 6, 28, 12, 6, 9)
+            // },
+            // new OrderEntity
+            // {
+            //     Id = 4,
+            //     BuyerId = 5,
+            //     SellerId = 1,
+            //     ItemId = 4,
+            //     StatusId = StatusType.Canceled,
+            //     OrderTime = new DateTime(2020, 6, 20, 19, 10, 9)
+            // },
+            // new OrderEntity
+            // {
+            //     Id = 5,
+            //     BuyerId = 3,
+            //     SellerId = 1,
+            //     ItemId = 5,
+            //     StatusId = StatusType.Completed,
+            //     OrderTime = new DateTime(2020, 6, 26, 8, 4, 9)
+            // },
             new OrderEntity
             {
                 Id = 6,

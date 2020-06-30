@@ -3,10 +3,10 @@ import React from 'react';
 import { SortOrder } from 'react-bootstrap-table-next';
 
 export const defaultSorted: [{ dataField: any; order: SortOrder }] = [
-    { dataField: 'id', order: 'asc' },
+    { dataField: 'name', order: 'asc' },
 ];
 
-const getMarketplaceColumns = (onViewDetails: (arg0: any) => void) => [
+const getSellingItemListColumns = (onViewDetails: (arg0: any) => void) => [
     {
         dataField: 'id',
         text: 'Item ID',
@@ -22,12 +22,6 @@ const getMarketplaceColumns = (onViewDetails: (arg0: any) => void) => [
     {
         dataField: 'description',
         text: 'Description',
-    },
-    {
-        dataField: 'ownerId',
-        text: 'Seller ID',
-        formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) =>
-            cell === 1 ? `${cell} (You)` : cell,
     },
     {
         dataField: 'price',
@@ -46,4 +40,4 @@ const getMarketplaceColumns = (onViewDetails: (arg0: any) => void) => [
     },
 ];
 
-export default getMarketplaceColumns;
+export default getSellingItemListColumns;

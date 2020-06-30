@@ -17,8 +17,12 @@ namespace AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade
         public IEnumerable<OrderModel> GetUserBuyingOrders(int userId);
 
         public IEnumerable<MarketplaceItemModel> GetItemsOnMarket();
+        
+        public IEnumerable<MarketplaceItemModel> GetUserItemsOnMarket(int userId);
 
         public OrderBookingModel CreateOrder(int itemId, int buyerId);
+        
+        public bool CompleteOrder(int orderId);
 
     }
 }

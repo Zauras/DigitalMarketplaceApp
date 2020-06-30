@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using AsgardMarketplace.Controllers.ApiDto;
-using AsgardMarketplace.Services.DomainModels;
 using AsgardMarketplace.Services.Facade;
 
 namespace AsgardMarketplace.Controllers
@@ -23,11 +22,16 @@ namespace AsgardMarketplace.Controllers
             _logger = logger;
             _marketplaceService = marketplaceService;
         }
-        
 
         [HttpGet("items")]
         public ActionResult<IEnumerable<MarketplaceItemDto>> GetItems() => 
             _marketplaceService.GetMarketplaceItems().Select(i => i.ToApiDto())
+                .ToArray();
+        
+        [HttpGet("items/owner/{userId}")]
+        public ActionResult<IEnumerable<MarketplaceItemDto>> GetUserItems(int userId) => 
+            _marketplaceService.GetUserItemsOnMarket(userId)
+                .Select(i => i.ToApiDto())
                 .ToArray();
         
     }

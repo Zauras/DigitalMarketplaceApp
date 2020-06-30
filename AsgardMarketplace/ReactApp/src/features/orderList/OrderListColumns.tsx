@@ -3,53 +3,81 @@ import React from 'react';
 import { SortOrder } from 'react-bootstrap-table-next';
 
 export const defaultSorted: [{ dataField: any; order: SortOrder }] = [
-    { dataField: 'name', order: 'asc' },
+    { dataField: 'item.id', order: 'asc' },
 ];
 
-const getOrderListColumns = (onViewDetails: (arg0: any) => void) => [
-    {
-        dataField: 'id',
-        text: 'ID',
-    },
-    {
-        dataField: 'item.image',
-        text: '',
-    },
-    {
-        dataField: 'item.name',
-        text: 'Item Name',
-        sort: true,
-    },
-    {
-        dataField: 'item.price',
-        text: 'Price',
-        sort: true,
-    },
-    {
-        dataField: 'status.type',
-        text: 'Status',
-        sort: true,
-    },
-    {
-        dataField: 'orderTime',
-        text: 'Ordered On',
-        sort: true,
-        formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) => {
-            console.log(cell);
-            return <div>{cell.toLocaleString()}</div>;
+const getOrderListColumns = (
+    onDefaultAction: { (arg0: any): void; },
+    onOtherAction?: { (arg0: any): void },
+    isSellerTable = true
+) => {
+    const getActionButton = (cell: any, row: any) => {
+        if (!!onOtherAction && isSellerTable && row.status.type === 'Paid') {
+            return (
+                <Button
+                    color='danger'
+                    onClick={() => onOtherAction(row)}
+                    style={{ display: 'block', margin: 'auto' }}
+                >
+                    Ship Item to Buyer
+                </Button>
+            );
+        } else if (!!onOtherAction && !isSellerTable && row.status.type === 'Shipped') {
+            return (
+                <Button
+                    color='success'
+                    onClick={() => onOtherAction(row)}
+                    style={{ display: 'block', margin: 'auto' }}
+                >
+                    Receive the Item
+                </Button>
+            );
+        } else {
+            return (
+                <Button
+                    color='primary'
+                    onClick={() => onDefaultAction(row)}
+                    style={{ display: 'block', margin: 'auto' }}
+                >
+                    View Dietails
+                </Button>
+            );
+        }
+    };
+
+    return [
+        {
+            dataField: 'item.id',
+            text: 'Item ID',
         },
-    },
-    {
-        formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) => (
-            <Button
-                color='primary'
-                onClick={() => onViewDetails(row)}
-                style={{ display: 'block', margin: 'auto' }}
-            >
-                View Dietails
-            </Button>
-        ),
-    },
-];
+        {
+            dataField: 'item.image',
+            text: '',
+        },
+        {
+            dataField: 'item.name',
+            text: 'Item Name',
+        },
+        {
+            dataField: 'item.price',
+            text: 'Price',
+        },
+        {
+            dataField: 'status.type',
+            text: 'Status',
+        },
+        {
+            dataField: 'orderTime',
+            text: 'Ordered On',
+            formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) => (
+                <div>{cell.toLocaleString()}</div>
+            ),
+        },
+        {
+            formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) =>
+                getActionButton(cell, row),
+        },
+    ];
+};
 
 export default getOrderListColumns;
