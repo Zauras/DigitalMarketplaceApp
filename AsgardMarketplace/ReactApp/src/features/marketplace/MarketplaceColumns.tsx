@@ -13,7 +13,10 @@ const getMarketplaceColumns = (onViewDetails: (arg0: any) => void) => [
     },
     {
         dataField: 'image',
-        text: '',
+        text: 'Image',
+        formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) => (
+            <img src={cell} alt='image' width='120' height='80' />
+        ),
     },
     {
         dataField: 'name',

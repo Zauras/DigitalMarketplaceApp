@@ -129,8 +129,8 @@ const userId = 1;
 
 const BuyingOrderList = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isOrderDetailsOpen, setIsItemDetailsOpen] = useState<boolean>(false);
-    const [selectedOrder, setSelectedItem] = useState<any>(undefined);
+    const [isOrderDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+    const [selectedOrder, setSelectedOrder] = useState<any>(undefined);
     const [orderList, setOrderList] = useState<any>([]);
 
     useEffect(() => {
@@ -145,8 +145,8 @@ const BuyingOrderList = () => {
     };
 
     const onViewDetails = (order: IOrder) => {
-        setSelectedItem(order);
-        setIsItemDetailsOpen(true);
+        setSelectedOrder(order);
+        setIsDetailsOpen(true);
     };
 
     const onReceiveItem = async (order: IOrder) => {
@@ -155,19 +155,26 @@ const BuyingOrderList = () => {
         await fetchOrderList();
     };
 
-    const onDetailsClose = () => {
-        setIsItemDetailsOpen(false);
-        setSelectedItem(undefined);
+    const onSendPayment = async (order: IOrder) => {
+        setIsLoading(true);
+        await OrderService.patchOrderSendPayment(order.id);
+        await fetchOrderList();
     };
 
-    const columns = getOrderListColumns(onViewDetails, onReceiveItem, false);
+    const onDetailsClose = () => {
+        setIsDetailsOpen(false);
+        setSelectedOrder(undefined);
+    };
 
-    // TODO: receive the item
+    const columns = getOrderListColumns(onViewDetails, false, onReceiveItem, onSendPayment);
+    
     return (
         <div>
-            {/*<OrderDetailsControl selectedOrder={selectedOrder}*/}
-            {/*                     isOpen={isOrderDetailsOpen}*/}
-            {/*                     onClose={onDetailsClose}/>*/}
+            <OrderDetailsControl
+                selectedOrder={selectedOrder}
+                isOpen={isOrderDetailsOpen}
+                onClose={onDetailsClose}
+            />
 
             <LoaderScreen dim isLoading={isLoading} />
 

@@ -7,9 +7,10 @@ export const defaultSorted: [{ dataField: any; order: SortOrder }] = [
 ];
 
 const getOrderListColumns = (
-    onDefaultAction: { (arg0: any): void; },
+    onDefaultAction: { (arg0: any): void },
+    isSellerTable = true,
     onOtherAction?: { (arg0: any): void },
-    isSellerTable = true
+    onOtherSecondAction?: { (arg0: any): void },
 ) => {
     const getActionButton = (cell: any, row: any) => {
         if (!!onOtherAction && isSellerTable && row.status.type === 'Paid') {
@@ -32,6 +33,16 @@ const getOrderListColumns = (
                     Receive the Item
                 </Button>
             );
+        } else if (!!onOtherSecondAction && !isSellerTable && row.status.type === 'Booked') {
+            return (
+                <Button
+                    color='warning'
+                    onClick={() => onOtherSecondAction(row)}
+                    style={{ display: 'block', margin: 'auto' }}
+                >
+                    Send Payment
+                </Button>
+            );
         } else {
             return (
                 <Button
@@ -52,7 +63,10 @@ const getOrderListColumns = (
         },
         {
             dataField: 'item.image',
-            text: '',
+            text: 'Image',
+            formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) => (
+                <img src={cell} alt='image' width='120' height='80' />
+            )
         },
         {
             dataField: 'item.name',

@@ -108,7 +108,7 @@ const MarketItemDetailsControl = (props: IItemDetailsControl) => {
                             <Container>
                                 <Row>
                                     <Col xs={6} md={4}>
-                                        {selectedItem.image}
+                                        <img src={selectedItem.image} alt='image' width='180' height='120'/>
                                     </Col>
                                     <Col xs={6} md={4}>
                                         {selectedItem.description}
@@ -135,14 +135,17 @@ const MarketItemDetailsControl = (props: IItemDetailsControl) => {
                         <ModalHeader>Order Created</ModalHeader>
                         <ModalBody>
                             <h4>Do you want to pay now?</h4>
-                            <div>Otherwise, you will have 2 hours to make a payment</div>
-                            <div>until order will be canceled.</div>
+                            <div>Otherwise, item going to be marked as booked</div>
+                            <div>
+                                and you will have 2 hours to make a payment until order will be
+                                cancelled.
+                            </div>
                         </ModalBody>
                         <ModalFooter>
                             <Button color='primary' onClick={requestSendPayment}>
                                 Pay
                             </Button>
-                            <Button color='secondary' onClick={closeActionControl}>
+                            <Button color='warning' onClick={closeActionControl}>
                                 Latter
                             </Button>
                         </ModalFooter>

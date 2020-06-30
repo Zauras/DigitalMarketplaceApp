@@ -45,7 +45,6 @@ class OrderService extends HttpRequestService {
         const response = await this.patch(route, orderId);
         return response.data;
     };
-    
 }
 
 export default new OrderService();
