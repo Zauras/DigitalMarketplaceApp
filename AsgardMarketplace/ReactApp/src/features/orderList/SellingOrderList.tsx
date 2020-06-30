@@ -42,7 +42,6 @@ const SellingOrderList = () => {
 
     const fetchSellingItemList = async () => {
         const response = await MarketplaceService.getUserItems(userId);
-        console.log(response);
         Boolean(response) ? setItemList(response) : setItemList([]);
     };
 

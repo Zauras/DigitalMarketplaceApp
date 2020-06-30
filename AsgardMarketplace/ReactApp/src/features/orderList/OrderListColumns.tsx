@@ -66,7 +66,7 @@ const getOrderListColumns = (
             text: 'Image',
             formatter: (cell: any, row: any, rowIndex: any, formatExtraData: any) => (
                 <img src={cell} alt='image' width='120' height='80' />
-            )
+            ),
         },
         {
             dataField: 'item.name',

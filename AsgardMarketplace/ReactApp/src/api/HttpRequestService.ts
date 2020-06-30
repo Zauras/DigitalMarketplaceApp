@@ -20,7 +20,6 @@ class HttpRequestService {
             headers: commonHeaders,
             transformResponse: [
                 (data) => {
-                    console.log(data);
                     return JSON.parse(data);
                 },
             ],
@@ -29,9 +28,7 @@ class HttpRequestService {
 
     handleErrors = async (request: any) => {
         try {
-            const x = await request();
-            console.log(x);
-            return x;
+            return await request();
         } catch (error) {
             if (error.response) {
                 throw new Error(error.response);

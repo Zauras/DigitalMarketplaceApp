@@ -51,7 +51,12 @@ const OrderDetailsControl = (props: any) => {
                             <Container>
                                 <Row>
                                     <Col xs={6} md={4}>
-                                        <img src={selectedItem.image} alt='image' width='180' height='120'/>
+                                        <img
+                                            src={selectedItem.image}
+                                            alt='image'
+                                            width='180'
+                                            height='120'
+                                        />
                                     </Col>
                                     <Col xs={6} md={4}>
                                         {selectedItem.description}
@@ -78,7 +83,12 @@ const OrderDetailsControl = (props: any) => {
                                 <Container>
                                     <Row>
                                         <Col xs={4} md={3}>
-                                            <img src={selectedOrder.item.image} alt='image' width='180' height='120'/>
+                                            <img
+                                                src={selectedOrder.item.image}
+                                                alt='image'
+                                                width='180'
+                                                height='120'
+                                            />
                                         </Col>
 
                                         <Col xs={4} md={3}>
