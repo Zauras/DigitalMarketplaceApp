@@ -2,7 +2,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Threading;
 
 using AsgardMarketplace.Services.DomainModels;
 using AsgardMarketplace.Services.Facade;
@@ -23,11 +22,9 @@ namespace AsgardMarketplace.Services
         public delegate void OrderBookingTimeoutHandler (object source, int orderId);
         public event OrderBookingTimeoutHandler OrderBookingTimeout;
 
-        public OrderBookingTimeoutWatcherService()
-        {
+        public OrderBookingTimeoutWatcherService() =>
             StartBookingTimeoutsWatcher();
-        }
-
+        
         public bool StartBookingTimeout(OrderBookingModel orderBooking) =>
             _orderBookings.TryAdd(orderBooking.OrderId, orderBooking.OrderTime);
 

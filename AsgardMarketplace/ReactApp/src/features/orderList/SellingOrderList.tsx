@@ -18,7 +18,8 @@ const SellingOrderList = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [isOrderDetailsOpen, setIsItemDetailsOpen] = useState<boolean>(false);
-    const [selectedOrder, setSelectedItem] = useState<any>(undefined);
+    const [selectedOrder, setSelectedOrder] = useState<any>(undefined);
+    const [selectedItem, setSelectedItem] = useState<any>(undefined);
 
     const [orderList, setOrderList] = useState<any>([]);
     const [itemList, setItemList] = useState<any>([]);
@@ -50,8 +51,13 @@ const SellingOrderList = () => {
         Boolean(response) ? setOrderList(response) : setOrderList([]);
     };
 
-    const onViewDetails = (order: IOrder) => {
-        setSelectedItem(order);
+    const onViewOrderDetails = (order: IOrder) => {
+        setSelectedOrder(order);
+        setIsItemDetailsOpen(true);
+    };
+
+    const onViewItemDetails = (item: any) => {
+        setSelectedItem(item);
         setIsItemDetailsOpen(true);
     };
 
@@ -64,17 +70,21 @@ const SellingOrderList = () => {
 
     const onDetailsClose = () => {
         setIsItemDetailsOpen(false);
+        setSelectedOrder(undefined);
         setSelectedItem(undefined);
     };
 
-    const itemListColumns = getSellingItemListColumns(onViewDetails);
-    const orderListColumns = getOrderListColumns(onViewDetails, onShipItem);
+    const itemListColumns = getSellingItemListColumns(onViewItemDetails);
+    const orderListColumns = getOrderListColumns(onViewOrderDetails, true, onShipItem);
 
     return (
         <div>
-            {/*<OrderDetailsControl selectedOrder={selectedOrder}*/}
-            {/*                     isOpen={isOrderDetailsOpen}*/}
-            {/*                     onClose={onDetailsClose}/>*/}
+            <OrderDetailsControl
+                selectedOrder={selectedOrder}
+                selectedItem={selectedItem}
+                isOpen={isOrderDetailsOpen}
+                onClose={onDetailsClose}
+            />
 
             <LoaderScreen dim isLoading={isLoading} />
 
