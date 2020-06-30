@@ -9,30 +9,6 @@ import getMarketplaceColumns, { defaultSorted } from './MarketplaceColumns';
 import MarketplaceService from '../../api/services/MarketplaceService';
 import LoaderScreen from '../../components/loader/LoaderScreen';
 
-const fakeItemList = [
-    {
-        id: 1,
-        image: '',
-        name: "Thor's Hammer - Mjölnir",
-        description: 'Buy and give some hammering',
-        price: 18.5,
-    },
-    {
-        id: 2,
-        image: '',
-        name: "Loki's The Green Mask",
-        description: 'Be Da Great Green Prophet',
-        price: 18.5,
-    },
-    {
-        id: 3,
-        image: '',
-        name: "Freya's sword",
-        description: 'Slash with ice and love',
-        price: 18.5,
-    },
-];
-
 export interface IMarketItem {
     id: number;
     owner: string;

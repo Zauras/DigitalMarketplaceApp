@@ -16,108 +16,6 @@ enum OrderStatus {
     Canceled = 'Canceled',
 }
 
-const orderListTest = [
-    {
-        id: 1,
-        orderedItem: {
-            id: 20,
-            image: '',
-            name: 'Item name',
-            description: 'Item description',
-            price: 18.5,
-        },
-        seller: {
-            id: 1,
-            name: 'user-1',
-        },
-        status: OrderStatus.Unpaid,
-        orderTime: new Date(),
-    },
-    {
-        id: 2,
-        orderedItem: {
-            id: 20,
-            image: '',
-            name: 'Item name',
-            description: 'Item description',
-            price: 18.5,
-        },
-        seller: {
-            id: 1,
-            name: 'user-1',
-        },
-        status: OrderStatus.PendingDelivery,
-        orderTime: new Date(),
-    },
-    {
-        id: 3,
-        orderedItem: {
-            id: 20,
-            image: '',
-            name: 'Item name',
-            description: 'Item description',
-            price: 18.5,
-        },
-        seller: {
-            id: 1,
-            name: 'user-1',
-        },
-        status: OrderStatus.PendingDelivery,
-        orderTime: new Date(),
-    },
-    {
-        id: 4,
-        orderedItem: {
-            id: 20,
-            image: '',
-            name: 'Item name',
-            description: 'Item description',
-            price: 18.5,
-        },
-        seller: {
-            id: 1,
-            name: 'user-1',
-        },
-        status: OrderStatus.Delivered,
-        orderTime: new Date(),
-    },
-];
-
-const orderListX = [
-    {
-        id: 1,
-        item: {
-            id: 20,
-            image: '',
-            name: 'Item name',
-            description: 'Item description',
-            price: 18.5,
-        },
-        seller: {
-            id: 1,
-            name: 'user-1',
-        },
-        status: OrderStatus.Unpaid,
-        orderTime: new Date(),
-    },
-    {
-        id: 1,
-        item: {
-            id: 20,
-            image: '',
-            name: 'Item name',
-            description: 'Item description',
-            price: 18.5,
-        },
-        seller: {
-            id: 1,
-            name: 'user-1',
-        },
-        status: OrderStatus.Unpaid,
-        orderTime: new Date(),
-    },
-];
-
 export interface IOrder {
     id: number;
     orderedItem: IMarketItem;
@@ -167,7 +65,7 @@ const BuyingOrderList = () => {
     };
 
     const columns = getOrderListColumns(onViewDetails, false, onReceiveItem, onSendPayment);
-    
+
     return (
         <div>
             <OrderDetailsControl
