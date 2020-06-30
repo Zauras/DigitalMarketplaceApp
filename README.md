@@ -13,9 +13,11 @@ Backend: .NET Core 3
 
 
 How to run it:
-	 1) With IDE: run .sln file with IDE (JetBNrains Rider or Visual Studio) and build-run project
+	1) cd to ./AsgardMarketplace/ReactApp -> run in terminal "npm install" (or probably IDE you do it for you)
 
-	 2) Through terminal:
+	2) With IDE: run .sln file with IDE (JetBNrains Rider or Visual Studio) and build-run project
+
+	2) Through terminal:
 	 		cd to ./AsgardMarketplace
 	 		dotnet restore
 	 		dotnet run
