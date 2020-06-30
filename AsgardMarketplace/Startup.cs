@@ -9,6 +9,8 @@ using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase;
 using AsgardMarketplace.Repositories.AsgardMarketplaceDatabase.Facade;
 using AsgardMarketplace.Services;
 using AsgardMarketplace.Services.Facade;
+using AsgardMarketplace.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace AsgardMarketplace
 {
@@ -29,6 +31,15 @@ namespace AsgardMarketplace
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
                 { configuration.RootPath = "ReactApp/build"; });
+
+            services.AddSwaggerGen(swaggerGenOptions =>
+            {
+                swaggerGenOptions.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Asgard Store API",
+                    Version = "v1"
+                });
+            });
             
             // Configure Dependency Injection
             services.AddSingleton<IMarketplaceService, MarketplaceService>();
@@ -55,6 +66,16 @@ namespace AsgardMarketplace
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+
+            app.UseSwagger(option => {option.RouteTemplate = swaggerOptions.JsonRoute; });
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
+            });
+            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
